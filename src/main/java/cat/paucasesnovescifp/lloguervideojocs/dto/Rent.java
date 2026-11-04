@@ -6,8 +6,8 @@ package cat.paucasesnovescifp.lloguervideojocs.dto;
 
 /**
  *
- * @author alumne
+ * @author marc
  */
-public class Client {
+public class Rent {
     
 }
