@@ -28,17 +28,104 @@ public class MainScreen extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jScrollPaneVideogameRental = new javax.swing.JScrollPane();
+        jTableVideogameRental = new javax.swing.JTable();
+        jLabelTotalRents = new javax.swing.JLabel();
+        jLabelModifiableTotalRents = new javax.swing.JLabel();
+        jMenuBarVideogameRental = new javax.swing.JMenuBar();
+        jMenuRent = new javax.swing.JMenu();
+        jMenuItemRentRecord = new javax.swing.JMenuItem();
+        jMenuItemRentReturn = new javax.swing.JMenuItem();
+        jMenuUser = new javax.swing.JMenu();
+        jMenuItemUserAdd = new javax.swing.JMenuItem();
+        jMenuItemUserRemove = new javax.swing.JMenuItem();
+        jMenuGame = new javax.swing.JMenu();
+        jMenuItemGameAdd = new javax.swing.JMenuItem();
+        jMenuItemGameRemove = new javax.swing.JMenuItem();
+
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+
+        jTableVideogameRental.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+                "Núm. registre", "Titol del joc", "Usuari que l'ha llogat", "Plataforma", "Data d'inici", "Data de tornada", "Gènere"
+            }
+        ) {
+            Class[] types = new Class [] {
+                java.lang.Integer.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
+            };
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false, false, false, false
+            };
+
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        jTableVideogameRental.getTableHeader().setReorderingAllowed(false);
+        jScrollPaneVideogameRental.setViewportView(jTableVideogameRental);
+
+        jLabelTotalRents.setText("Total de lloguers: ");
+
+        jMenuRent.setText("Lloguer");
+
+        jMenuItemRentRecord.setText("Registrar...");
+        jMenuRent.add(jMenuItemRentRecord);
+
+        jMenuItemRentReturn.setText("Tornar...");
+        jMenuRent.add(jMenuItemRentReturn);
+
+        jMenuBarVideogameRental.add(jMenuRent);
+
+        jMenuUser.setText("Usuari");
+
+        jMenuItemUserAdd.setText("Crear...");
+        jMenuUser.add(jMenuItemUserAdd);
+
+        jMenuItemUserRemove.setText("Borrar...");
+        jMenuUser.add(jMenuItemUserRemove);
+
+        jMenuBarVideogameRental.add(jMenuUser);
+
+        jMenuGame.setText("Joc");
+
+        jMenuItemGameAdd.setText("Crear...");
+        jMenuGame.add(jMenuItemGameAdd);
+
+        jMenuItemGameRemove.setText("Borrar...");
+        jMenuGame.add(jMenuItemGameRemove);
+
+        jMenuBarVideogameRental.add(jMenuGame);
+
+        setJMenuBar(jMenuBarVideogameRental);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 400, Short.MAX_VALUE)
+            .addComponent(jScrollPaneVideogameRental, javax.swing.GroupLayout.Alignment.TRAILING)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabelTotalRents)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabelModifiableTotalRents)
+                .addGap(0, 0, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 300, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(jScrollPaneVideogameRental, javax.swing.GroupLayout.DEFAULT_SIZE, 379, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabelTotalRents)
+                    .addComponent(jLabelModifiableTotalRents))
+                .addGap(17, 17, 17))
         );
 
         pack();
@@ -70,5 +157,19 @@ public class MainScreen extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel jLabelModifiableTotalRents;
+    private javax.swing.JLabel jLabelTotalRents;
+    private javax.swing.JMenuBar jMenuBarVideogameRental;
+    private javax.swing.JMenu jMenuGame;
+    private javax.swing.JMenuItem jMenuItemGameAdd;
+    private javax.swing.JMenuItem jMenuItemGameRemove;
+    private javax.swing.JMenuItem jMenuItemRentRecord;
+    private javax.swing.JMenuItem jMenuItemRentReturn;
+    private javax.swing.JMenuItem jMenuItemUserAdd;
+    private javax.swing.JMenuItem jMenuItemUserRemove;
+    private javax.swing.JMenu jMenuRent;
+    private javax.swing.JMenu jMenuUser;
+    private javax.swing.JScrollPane jScrollPaneVideogameRental;
+    private javax.swing.JTable jTableVideogameRental;
     // End of variables declaration//GEN-END:variables
 }
