@@ -4,10 +4,102 @@
  */
 package cat.paucasesnovescifp.lloguervideojocs.dto;
 
+import cat.paucasesnovescifp.lloguervideojocs.util.GameGenre;
+import cat.paucasesnovescifp.lloguervideojocs.util.GamePlatform;
+import java.time.LocalDate;
+
 /**
  *
  * @author marc
  */
 public class Rent {
+    private int registerNumber;
+    private String gameName;
+    private User user;
+    private GamePlatform platform;
+    private LocalDate initialDate;
+    private LocalDate finalDate;
+    private GameGenre genre;
+    
+    private boolean ended;
+    
+    private static int rentId = 0;
+
+    public Rent(User user, GameCopy gameCopy) {
+        setRegisterNumber(rentId);
+        setGameName(gameCopy.getGame().getName());
+        setUser(user);
+        setPlatform(gameCopy.getPlatform());
+        setInitialDate();
+        setFinalDate(3);
+        setGenre(gameCopy.getGame().getGenre());
+        ended = false;
+    }
+
+    public int getRegisterNumber() {
+        return registerNumber;
+    }
+
+    private void setRegisterNumber(int registerNumber) {
+        this.registerNumber = registerNumber;
+        rentId++;
+    }
+
+    public String getGameName() {
+        return gameName;
+    }
+
+    private void setGameName(String gameName) {
+        this.gameName = gameName;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    private void setUser(User user) {
+        this.user = user;
+    }
+
+    public GamePlatform getPlatform() {
+        return platform;
+    }
+
+    private void setPlatform(GamePlatform platform) {
+        this.platform = platform;
+    }
+
+    public LocalDate getInitialDate() {
+        return initialDate;
+    }
+
+    private void setInitialDate() {
+        this.initialDate = LocalDate.now();
+    }
+
+    public LocalDate getFinalDate() {
+        return finalDate;
+    }
+
+    private void setFinalDate(int extraDays) {
+        this.finalDate = LocalDate.now().plusDays(extraDays);
+    }
+
+    public GameGenre getGenre() {
+        return genre;
+    }
+
+    private void setGenre(GameGenre genre) {
+        this.genre = genre;
+    }
+    
+    
+    public boolean isEnded() {
+        return ended;
+    }
+    
+    public void markAsEnded() {
+        ended = true;
+    }
     
 }

@@ -4,17 +4,19 @@
  */
 package cat.paucasesnovescifp.lloguervideojocs.dto;
 
+import cat.paucasesnovescifp.lloguervideojocs.util.GamePlatform;
+
 /**
  *
  * @author marc
  */
 public class GameCopy {
     private int id;
-    private String platform;
+    private GamePlatform platform;
     private Game game;
     private boolean isRent;
 
-    public GameCopy(int id, String platform, Game game) {
+    public GameCopy(int id, GamePlatform platform, Game game) {
         setId(id);
         setPlatform(platform);
         setGame(game);
@@ -29,11 +31,11 @@ public class GameCopy {
         this.id = id;
     }
 
-    public String getPlatform() {
+    public GamePlatform getPlatform() {
         return platform;
     }
 
-    private void setPlatform(String platform) {
+    private void setPlatform(GamePlatform platform) {
         this.platform = platform;
     }
 

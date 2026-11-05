@@ -47,18 +47,18 @@ public class Game {
     }
 
     private void setPlatformsCopy(int PcUnits, int Ps5Units, int XboxUnits, int Switch2Units) {
-        platformsCopy.put(GamePlatform.PC, createPlatformGameCopyList(PcUnits)); 
-        platformsCopy.put(GamePlatform.PS5, createPlatformGameCopyList(Ps5Units));
-        platformsCopy.put(GamePlatform.XBOX, createPlatformGameCopyList(XboxUnits));
-        platformsCopy.put(GamePlatform.SWITCH2, createPlatformGameCopyList(Switch2Units));
+        platformsCopy.put(GamePlatform.PC, createPlatformGameCopyList(PcUnits, GamePlatform.PC)); 
+        platformsCopy.put(GamePlatform.PS5, createPlatformGameCopyList(Ps5Units, GamePlatform.PS5));
+        platformsCopy.put(GamePlatform.XBOX, createPlatformGameCopyList(XboxUnits, GamePlatform.XBOX));
+        platformsCopy.put(GamePlatform.SWITCH2, createPlatformGameCopyList(Switch2Units, GamePlatform.SWITCH2));
     }
     
     
-    private List<GameCopy> createPlatformGameCopyList(int quantity) {
+    private List<GameCopy> createPlatformGameCopyList(int quantity, GamePlatform platform) {
         List<GameCopy> gameCopyList = new ArrayList<>();
         
         for (int i = 0; i < quantity; i++) {
-            GameCopy gameCopy = new GameCopy(gameId, name, this);
+            GameCopy gameCopy = new GameCopy(gameId, platform, this);
             gameCopyList.add(gameCopy);
             gameId++;
         }
