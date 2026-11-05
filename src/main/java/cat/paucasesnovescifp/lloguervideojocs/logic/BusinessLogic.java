@@ -57,7 +57,7 @@ public class BusinessLogic {
     public static void removeGame(Game game) throws BusinessException{
         
         for (Rent rent : rentList){
-            if (rent.getGame() == game && !rent.isEnded()){
+            if (rent.getGameCopy() == game && !rent.isEnded()){
                 throw new BusinessException("El joc no es pot eliminar perquè té un o més lloguers actius");
             }
         }
