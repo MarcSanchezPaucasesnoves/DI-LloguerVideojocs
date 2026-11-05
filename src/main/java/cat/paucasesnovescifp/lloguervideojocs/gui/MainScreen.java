@@ -4,6 +4,8 @@
  */
 package cat.paucasesnovescifp.lloguervideojocs.gui;
 
+import javax.swing.table.DefaultTableModel;
+
 /**
  *
  * @author alumne
@@ -12,11 +14,14 @@ public class MainScreen extends javax.swing.JFrame {
     
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(MainScreen.class.getName());
 
+    
+    private DefaultTableModel model;
     /**
      * Creates new form MainScreen
      */
     public MainScreen() {
         initComponents();
+        model = (DefaultTableModel) jTableVideogameRental.getModel();
     }
 
     /**
@@ -76,9 +81,11 @@ public class MainScreen extends javax.swing.JFrame {
         jMenuRent.setText("Lloguer");
 
         jMenuItemRentRecord.setText("Registrar...");
+        jMenuItemRentRecord.addActionListener(this::jMenuItemRentRecordActionPerformed);
         jMenuRent.add(jMenuItemRentRecord);
 
         jMenuItemRentReturn.setText("Tornar...");
+        jMenuItemRentReturn.addActionListener(this::jMenuItemRentReturnActionPerformed);
         jMenuRent.add(jMenuItemRentReturn);
 
         jMenuBarVideogameRental.add(jMenuRent);
@@ -86,9 +93,11 @@ public class MainScreen extends javax.swing.JFrame {
         jMenuUser.setText("Usuari");
 
         jMenuItemUserAdd.setText("Crear...");
+        jMenuItemUserAdd.addActionListener(this::jMenuItemUserAddActionPerformed);
         jMenuUser.add(jMenuItemUserAdd);
 
         jMenuItemUserRemove.setText("Borrar...");
+        jMenuItemUserRemove.addActionListener(this::jMenuItemUserRemoveActionPerformed);
         jMenuUser.add(jMenuItemUserRemove);
 
         jMenuBarVideogameRental.add(jMenuUser);
@@ -96,9 +105,11 @@ public class MainScreen extends javax.swing.JFrame {
         jMenuGame.setText("Joc");
 
         jMenuItemGameAdd.setText("Crear...");
+        jMenuItemGameAdd.addActionListener(this::jMenuItemGameAddActionPerformed);
         jMenuGame.add(jMenuItemGameAdd);
 
         jMenuItemGameRemove.setText("Borrar...");
+        jMenuItemGameRemove.addActionListener(this::jMenuItemGameRemoveActionPerformed);
         jMenuGame.add(jMenuItemGameRemove);
 
         jMenuBarVideogameRental.add(jMenuGame);
@@ -130,6 +141,36 @@ public class MainScreen extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void jMenuItemRentRecordActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemRentRecordActionPerformed
+        DialogRentRecord dialogRentRecord = new DialogRentRecord(this, true);
+        dialogRentRecord.setVisible(true);
+    }//GEN-LAST:event_jMenuItemRentRecordActionPerformed
+
+    private void jMenuItemRentReturnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemRentReturnActionPerformed
+        DialogReturnRecord dialogReturnRecord = new DialogReturnRecord(this, true);
+        dialogReturnRecord.setVisible(true);
+    }//GEN-LAST:event_jMenuItemRentReturnActionPerformed
+
+    private void jMenuItemUserAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemUserAddActionPerformed
+        DialogAddUser dialogAddUser = new DialogAddUser(this, true);
+        dialogAddUser.setVisible(true);
+    }//GEN-LAST:event_jMenuItemUserAddActionPerformed
+
+    private void jMenuItemUserRemoveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemUserRemoveActionPerformed
+        DialogRemoveUser dialogRemoveUser = new DialogRemoveUser(this, true);
+        dialogRemoveUser.setVisible(true);
+    }//GEN-LAST:event_jMenuItemUserRemoveActionPerformed
+
+    private void jMenuItemGameAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemGameAddActionPerformed
+        DialogAddGame dialogAddGame = new DialogAddGame(this, true);
+        dialogAddGame.setVisible(true);
+    }//GEN-LAST:event_jMenuItemGameAddActionPerformed
+
+    private void jMenuItemGameRemoveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemGameRemoveActionPerformed
+        DialogRemoveGame dialogRemoveGame = new DialogRemoveGame(this, true);
+        dialogRemoveGame.setVisible(true);
+    }//GEN-LAST:event_jMenuItemGameRemoveActionPerformed
 
     /**
      * @param args the command line arguments
