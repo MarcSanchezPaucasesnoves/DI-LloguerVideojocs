@@ -4,6 +4,7 @@
  */
 package cat.paucasesnovescifp.lloguervideojocs.logic;
 
+import cat.paucasesnovescifp.lloguervideojocs.dto.DtoException;
 import cat.paucasesnovescifp.lloguervideojocs.dto.Game;
 import cat.paucasesnovescifp.lloguervideojocs.dto.Rent;
 import cat.paucasesnovescifp.lloguervideojocs.dto.User;
@@ -54,10 +55,10 @@ public class BusinessLogic {
         gameList.add(game);
     }
     
-    public static void removeGame(Game game) throws BusinessException{
+    public static void removeGame(Game game) throws BusinessException, DtoException{
         
-        for (Rent rent : rentList){
-            if (rent.getGameCopy() == game && !rent.isEnded()){
+        for (Rent rent : rentList){   
+            if (rent.getGame() == game && !rent.isEnded()){
                 throw new BusinessException("El joc no es pot eliminar perquè té un o més lloguers actius");
             }
         }

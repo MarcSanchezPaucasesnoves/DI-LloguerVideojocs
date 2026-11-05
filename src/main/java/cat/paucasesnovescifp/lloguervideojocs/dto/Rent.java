@@ -20,7 +20,9 @@ public class Rent {
     private LocalDate initialDate;
     private LocalDate finalDate;
     private GameGenre genre;
-    
+
+
+    private Game game;
     private boolean ended;
     
     private static int rentId = 0;
@@ -33,6 +35,8 @@ public class Rent {
         setInitialDate();
         setFinalDate(3);
         setGenre(gameCopy.getGame().getGenre());
+        
+        game = gameCopy.getGame();
         ended = false;
     }
 
@@ -92,6 +96,12 @@ public class Rent {
     private void setGenre(GameGenre genre) {
         this.genre = genre;
     }
+
+    public Game getGame() throws DtoException{
+        if (game != null) return game;
+        throw new DtoException("Aquest joc no existeix");
+    }
+    
     
     
     public boolean isEnded() {
