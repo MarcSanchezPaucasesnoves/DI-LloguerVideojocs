@@ -4,6 +4,15 @@
  */
 package cat.paucasesnovescifp.lloguervideojocs.gui;
 
+import cat.paucasesnovescifp.lloguervideojocs.dto.DtoException;
+import cat.paucasesnovescifp.lloguervideojocs.dto.Game;
+import cat.paucasesnovescifp.lloguervideojocs.dto.Rent;
+import cat.paucasesnovescifp.lloguervideojocs.dto.User;
+import cat.paucasesnovescifp.lloguervideojocs.logic.BusinessException;
+import cat.paucasesnovescifp.lloguervideojocs.logic.BusinessLogic;
+import cat.paucasesnovescifp.lloguervideojocs.util.GameGenre;
+import cat.paucasesnovescifp.lloguervideojocs.util.GamePlatform;
+import java.util.ArrayList;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -22,6 +31,41 @@ public class MainScreen extends javax.swing.JFrame {
     public MainScreen() {
         initComponents();
         model = (DefaultTableModel) jTableVideogameRental.getModel();
+        
+        try {
+            User user1 = new User("Marc", "Sánchez", "Alonso", "00000000A", "000000000");
+            BusinessLogic.addUser(user1);
+            User user2 = new User("Pau", "Ferrer", "Tous", "11111111A", "111111111");
+            BusinessLogic.addUser(user2);
+            
+            Game game1 = new Game("Ark Survival Evolved", GameGenre.SURVIVAL, 0, 24, 0, 2);
+            BusinessLogic.addGame(game1);
+            Game game2 = new Game("Forza Horizon 4", GameGenre.PLATFORMER, 34, 0, 98, 0);
+            BusinessLogic.addGame(game2);
+            
+            Rent rent1 = new Rent(user1, BusinessLogic.rentGameCopy(game1, GamePlatform.SWITCH2));
+            BusinessLogic.addRent(rent1);
+            Rent rent2 = new Rent(user2, BusinessLogic.rentGameCopy(game2, GamePlatform.PC));
+            BusinessLogic.addRent(rent2);
+            
+        } catch (DtoException | BusinessException e) {
+            e.printStackTrace();
+        }
+        
+        
+        refreshMainScreen();
+        
+        
+        javax.swing.table.TableRowSorter<?> sorter = (javax.swing.table.TableRowSorter<?>) jTableVideogameRental.getRowSorter();
+
+        if (sorter != null) {
+            java.util.List<javax.swing.RowSorter.SortKey> sortKeys = new java.util.ArrayList<>();
+    
+            sortKeys.add(new javax.swing.RowSorter.SortKey(0, javax.swing.SortOrder.DESCENDING));
+    
+            sorter.setSortKeys(sortKeys);
+            sorter.sort();
+        }
     }
 
     /**
@@ -34,7 +78,29 @@ public class MainScreen extends javax.swing.JFrame {
     private void initComponents() {
 
         jScrollPaneVideogameRental = new javax.swing.JScrollPane();
-        jTableVideogameRental = new javax.swing.JTable();
+        jTableVideogameRental = new javax.swing.JTable() {
+            @Override
+            public java.awt.Component prepareRenderer(javax.swing.table.TableCellRenderer r, int row, int col) {
+                java.awt.Component c = super.prepareRenderer(r, row, col);
+
+                if (!isRowSelected(row)) {
+                    try {
+                        int value = Integer.parseInt(getValueAt(row, 0).toString());
+
+                        if (BusinessLogic.getRent(value).isEnded()) {
+                            c.setBackground(new java.awt.Color(200, 255, 200));
+                        } else {
+                            c.setBackground(new java.awt.Color(255, 200, 200));
+                        }
+
+                    } catch (Exception e) {
+                        c.setBackground(java.awt.Color.WHITE);
+                    }
+                }
+
+                return c;
+            }
+        };
         jLabelTotalRents = new javax.swing.JLabel();
         jLabelModifiableTotalRents = new javax.swing.JLabel();
         jMenuBarVideogameRental = new javax.swing.JMenuBar();
@@ -50,6 +116,7 @@ public class MainScreen extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
+        jTableVideogameRental.setAutoCreateRowSorter(true);
         jTableVideogameRental.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
@@ -73,8 +140,12 @@ public class MainScreen extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
+        jTableVideogameRental.setRowHeight(60);
         jTableVideogameRental.getTableHeader().setReorderingAllowed(false);
         jScrollPaneVideogameRental.setViewportView(jTableVideogameRental);
+        if (jTableVideogameRental.getColumnModel().getColumnCount() > 0) {
+            jTableVideogameRental.getColumnModel().getColumn(0).setCellRenderer(new javax.swing.table.DefaultTableCellRenderer() {{ setHorizontalAlignment(javax.swing.SwingConstants.LEFT); }});
+        }
 
         jLabelTotalRents.setText("Total de lloguers: ");
 
@@ -213,4 +284,29 @@ public class MainScreen extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPaneVideogameRental;
     private javax.swing.JTable jTableVideogameRental;
     // End of variables declaration//GEN-END:variables
+
+    public void refreshMainScreen(){
+        model.setRowCount(0);
+        jLabelModifiableTotalRents.setText("0");
+        
+        ArrayList<Rent> rentList = BusinessLogic.getRentList();
+        int nRents = 0;
+        
+        for (Rent rent : rentList) {
+            nRents++;
+            
+            model.addRow(
+                new Object[] {
+                    rent.getRegisterNumber(),
+                    rent.getGameName(),
+                    rent.getUser().getNameFirstSurname(),
+                    rent.getPlatform().toString(),
+                    rent.getInitialDate().toString(),
+                    rent.getFinalDate().toString(),
+                    rent.getGenre().toString()
+                }
+            );
+        }
+        jLabelModifiableTotalRents.setText(String.valueOf(nRents));
+    }
 }

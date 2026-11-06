@@ -6,9 +6,12 @@ package cat.paucasesnovescifp.lloguervideojocs.logic;
 
 import cat.paucasesnovescifp.lloguervideojocs.dto.DtoException;
 import cat.paucasesnovescifp.lloguervideojocs.dto.Game;
+import cat.paucasesnovescifp.lloguervideojocs.dto.GameCopy;
 import cat.paucasesnovescifp.lloguervideojocs.dto.Rent;
 import cat.paucasesnovescifp.lloguervideojocs.dto.User;
+import cat.paucasesnovescifp.lloguervideojocs.util.GamePlatform;
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  *
@@ -74,5 +77,32 @@ public class BusinessLogic {
     
     public static void completeRent(Rent rent){
         rent.markAsEnded();
+    }
+    
+    public static Rent getRent(int registerNumber) {
+        return rentList.get(registerNumber);
+    }
+    
+    
+    
+    public static GameCopy rentGameCopy(Game game, GamePlatform platform) throws BusinessException{   
+        List<GameCopy> gameCopyList = game.getPlatformsCopy().get(platform);
+        GameCopy gameToReturn = null;
+        
+        if (game.getAvailableGameUnits(platform) < 1) throw new BusinessException("No queden o no existeixen jocs per aquesta plataforma.");
+        
+        for (GameCopy gameCopy : gameCopyList) {
+            if (!gameCopy.isRent()) {
+                gameCopy.changeRentValue();
+                gameToReturn = gameCopy;
+                break;
+            }
+        }
+        
+        return gameToReturn;
+    }
+    
+    public static void unRentGameCopy(GameCopy gameCopy) {
+        gameCopy.changeRentValue();
     }
 }

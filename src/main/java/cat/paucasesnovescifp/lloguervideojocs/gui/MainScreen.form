@@ -133,6 +133,7 @@
       <SubComponents>
         <Component class="javax.swing.JTable" name="jTableVideogameRental">
           <Properties>
+            <Property name="autoCreateRowSorter" type="boolean" value="true"/>
             <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.editors2.TableModelEditor">
               <Table columnCount="7" rowCount="0">
                 <Column editable="false" title="N&#xfa;m. registre" type="java.lang.Integer"/>
@@ -149,7 +150,9 @@
                 <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
                   <Title/>
                   <Editor/>
-                  <Renderer/>
+                  <Renderer editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
+                    <Connection code="new javax.swing.table.DefaultTableCellRenderer() {{ setHorizontalAlignment(javax.swing.SwingConstants.LEFT); }}" type="code"/>
+                  </Renderer>
                 </Column>
                 <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
                   <Title/>
@@ -183,10 +186,14 @@
                 </Column>
               </TableColumnModel>
             </Property>
+            <Property name="rowHeight" type="int" value="60"/>
             <Property name="tableHeader" type="javax.swing.table.JTableHeader" editor="org.netbeans.modules.form.editors2.JTableHeaderEditor">
               <TableHeader reorderingAllowed="false" resizingAllowed="true"/>
             </Property>
           </Properties>
+          <AuxValues>
+            <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new javax.swing.JTable() {&#xa;    @Override&#xa;    public java.awt.Component prepareRenderer(javax.swing.table.TableCellRenderer r, int row, int col) {&#xa;        java.awt.Component c = super.prepareRenderer(r, row, col);&#xa;        &#xa;        if (!isRowSelected(row)) {&#xa;            try {&#xa;                int value = Integer.parseInt(getValueAt(row, 0).toString());&#xa;                &#xa;                if (BusinessLogic.getRent(value).isEnded()) {&#xa;                    c.setBackground(new java.awt.Color(200, 255, 200)); &#xa;                } else {&#xa;                    c.setBackground(new java.awt.Color(255, 200, 200)); &#xa;                }&#xa;                &#xa;            } catch (Exception e) {&#xa;                c.setBackground(java.awt.Color.WHITE); &#xa;            }&#xa;        }&#xa;        &#xa;        return c;&#xa;    }&#xa;}"/>
+          </AuxValues>
         </Component>
       </SubComponents>
     </Container>

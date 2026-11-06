@@ -12,7 +12,7 @@ import java.util.regex.Pattern;
  */
 public class DataValidator {
     private static final Pattern DNI_PATTERN = Pattern.compile("^[0-9]{8}[A-Za-z]$");
-    private static final Pattern PHONE_NUMBER_PATTERN = Pattern.compile("^[6789]\\d{8}$");
+    private static final Pattern PHONE_NUMBER_PATTERN = Pattern.compile("^\\d{9}$");
     
     public static boolean isDniValid(String dni){
         return DNI_PATTERN.matcher(dni).matches();

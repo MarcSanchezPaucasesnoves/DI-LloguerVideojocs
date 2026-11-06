@@ -71,7 +71,11 @@ public class User {
 
     private void setPhoneNumber(String phoneNumber) throws DtoException{
         if (DataValidator.isPhoneNumberValid(phoneNumber)) this.phoneNumber = phoneNumber;
-        else throw new DtoException("El nombre de telèfon no és vàlid. Ha de tenir vuit nombres i no hi poden haver espais en blanc.");
+        else throw new DtoException("El nombre de telèfon no és vàlid. Ha de tenir nou nombres i no hi poden haver espais en blanc.");
+    }
+    
+    public String getNameFirstSurname() {
+        return name + " " + firstSurname;
     }
 
 }

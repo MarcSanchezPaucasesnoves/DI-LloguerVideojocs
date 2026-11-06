@@ -7,6 +7,7 @@ package cat.paucasesnovescifp.lloguervideojocs.dto;
 import cat.paucasesnovescifp.lloguervideojocs.util.GameGenre;
 import cat.paucasesnovescifp.lloguervideojocs.util.GamePlatform;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -47,6 +48,8 @@ public class Game {
     }
 
     private void setPlatformsCopy(int PcUnits, int Ps5Units, int XboxUnits, int Switch2Units) {
+        this.platformsCopy = new HashMap<>();
+        
         platformsCopy.put(GamePlatform.PC, createPlatformGameCopyList(PcUnits, GamePlatform.PC)); 
         platformsCopy.put(GamePlatform.PS5, createPlatformGameCopyList(Ps5Units, GamePlatform.PS5));
         platformsCopy.put(GamePlatform.XBOX, createPlatformGameCopyList(XboxUnits, GamePlatform.XBOX));
