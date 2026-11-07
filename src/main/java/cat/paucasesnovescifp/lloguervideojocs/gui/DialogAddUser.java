@@ -8,7 +8,6 @@ import cat.paucasesnovescifp.lloguervideojocs.dto.DtoException;
 import cat.paucasesnovescifp.lloguervideojocs.dto.User;
 import cat.paucasesnovescifp.lloguervideojocs.logic.BusinessLogic;
 import java.time.LocalDate;
-import java.util.Locale;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 import org.netbeans.validation.api.builtin.stringvalidation.DniValidator;
@@ -32,21 +31,7 @@ public class DialogAddUser extends javax.swing.JDialog {
         super(parent, modal);
         initComponents();
         
-        jButtonUserAddConfirm.setEnabled(false);
-        ValidationGroup group = validationPanel.getValidationGroup();
-        group.add(jTextFieldName, new MayusValidator());
-        group.add(jTextFieldFirstSurname, new MayusValidator());
-        group.add(jTextFieldSecondSurname, new MayusValidator());
-        group.add(jTextFieldDni, new DniValidator());
-        group.add(jTextFieldPhoneNumber, new PhoneNumberValidator());
-        
-        validationPanel.addChangeListener(new ChangeListener() {
-            @Override
-            public void stateChanged(ChangeEvent e) {
-                if (validationPanel.getProblem() == null) jButtonUserAddConfirm.setEnabled(true);
-                else jButtonUserAddConfirm.setEnabled(false);
-            }
-        });
+        fieldsValidation();
         
         jTextEntryDate.setText(LocalDate.now().toString());
     }
@@ -235,4 +220,22 @@ public class DialogAddUser extends javax.swing.JDialog {
     private javax.swing.JTextField jTextFieldSecondSurname;
     private org.netbeans.validation.api.ui.swing.ValidationPanel validationPanel;
     // End of variables declaration//GEN-END:variables
+
+    public void fieldsValidation() {
+        jButtonUserAddConfirm.setEnabled(false);
+        ValidationGroup group = validationPanel.getValidationGroup();
+        group.add(jTextFieldName, new MayusValidator());
+        group.add(jTextFieldFirstSurname, new MayusValidator());
+        group.add(jTextFieldSecondSurname, new MayusValidator());
+        group.add(jTextFieldDni, new DniValidator());
+        group.add(jTextFieldPhoneNumber, new PhoneNumberValidator());
+        
+        validationPanel.addChangeListener(new ChangeListener() {
+            @Override
+            public void stateChanged(ChangeEvent e) {
+                if (validationPanel.getProblem() == null) jButtonUserAddConfirm.setEnabled(true);
+                else jButtonUserAddConfirm.setEnabled(false);
+            }
+        });
+    }
 }

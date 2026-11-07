@@ -40,4 +40,10 @@ public enum GameGenre {
         return displayName;
     }
     
+    public static GameGenre fromFormatedName(String text) throws GameGenreException{
+        for (GameGenre genre : GameGenre.values()) {
+            if (genre.getFormatedName().equals(text)) return genre;
+        }
+        throw new GameGenreException("Aquest GameGenre no existeix.");
+    }
 }

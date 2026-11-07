@@ -4,6 +4,18 @@
  */
 package cat.paucasesnovescifp.lloguervideojocs.gui;
 
+import cat.paucasesnovescifp.lloguervideojocs.dto.DtoException;
+import cat.paucasesnovescifp.lloguervideojocs.dto.Game;
+import cat.paucasesnovescifp.lloguervideojocs.logic.BusinessLogic;
+import cat.paucasesnovescifp.lloguervideojocs.util.GameGenre;
+import cat.paucasesnovescifp.lloguervideojocs.util.GameGenreException;
+import javax.swing.JCheckBox;
+import javax.swing.JSpinner;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
+import org.netbeans.validation.api.builtin.stringvalidation.MayusValidator;
+import org.netbeans.validation.api.ui.ValidationGroup;
+
 /**
  *
  * @author marc
@@ -18,6 +30,12 @@ public class DialogAddGame extends javax.swing.JDialog {
     public DialogAddGame(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
+        
+        fieldsValidation();
+        
+        for (GameGenre genre : GameGenre.values()) {
+            jComboBoxGenre.addItem(genre.getFormatedName());
+        }
     }
 
     /**
@@ -52,11 +70,14 @@ public class DialogAddGame extends javax.swing.JDialog {
         jSpinnerSwitch2Units = new javax.swing.JSpinner();
         jButtonUserAddConfirm = new javax.swing.JButton();
         jButtonUserAddCancel = new javax.swing.JButton();
+        validationPanel = new org.netbeans.validation.api.ui.swing.ValidationPanel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setResizable(false);
 
         jLabelName.setText("Nom *:");
+
+        jTextFieldName.setName("Nom"); // NOI18N
 
         jLabelGenre.setText("Gènere *:");
 
@@ -64,45 +85,61 @@ public class DialogAddGame extends javax.swing.JDialog {
         jPanelAvailablePlatforms.setLayout(new java.awt.GridLayout(4, 2, 0, 25));
 
         jCheckBoxPc.setText("PC");
+        jCheckBoxPc.addActionListener(this::jCheckBoxPcActionPerformed);
         jPanelAvailablePlatforms.add(jCheckBoxPc);
 
         jPanelPcUnits.setLayout(new java.awt.GridLayout(1, 0, -50, 0));
 
         jLabelPcUnits.setText("Unitats:");
         jPanelPcUnits.add(jLabelPcUnits);
+
+        jSpinnerPcUnits.setModel(new javax.swing.SpinnerNumberModel(0, 0, null, 1));
+        jSpinnerPcUnits.setEnabled(false);
         jPanelPcUnits.add(jSpinnerPcUnits);
 
         jPanelAvailablePlatforms.add(jPanelPcUnits);
 
         jCheckBoxPs5.setText("PS5");
+        jCheckBoxPs5.addActionListener(this::jCheckBoxPs5ActionPerformed);
         jPanelAvailablePlatforms.add(jCheckBoxPs5);
 
         jPanelPs5Units.setLayout(new java.awt.GridLayout(1, 0, -50, 0));
 
         jLabelPs5Units.setText("Unitats:");
         jPanelPs5Units.add(jLabelPs5Units);
+
+        jSpinnerPs5Units.setModel(new javax.swing.SpinnerNumberModel(0, 0, null, 1));
+        jSpinnerPs5Units.setEnabled(false);
         jPanelPs5Units.add(jSpinnerPs5Units);
 
         jPanelAvailablePlatforms.add(jPanelPs5Units);
 
         jCheckBoxXbox.setText("Xbox");
+        jCheckBoxXbox.addActionListener(this::jCheckBoxXboxActionPerformed);
         jPanelAvailablePlatforms.add(jCheckBoxXbox);
 
         jPanelXboxUnits.setLayout(new java.awt.GridLayout(1, 0, -50, 0));
 
         jLabelXboxUnits.setText("Unitats:");
         jPanelXboxUnits.add(jLabelXboxUnits);
+
+        jSpinnerXboxUnits.setModel(new javax.swing.SpinnerNumberModel(0, 0, null, 1));
+        jSpinnerXboxUnits.setEnabled(false);
         jPanelXboxUnits.add(jSpinnerXboxUnits);
 
         jPanelAvailablePlatforms.add(jPanelXboxUnits);
 
         jCheckBoxSwitch2.setText("Switch 2");
+        jCheckBoxSwitch2.addActionListener(this::jCheckBoxSwitch2ActionPerformed);
         jPanelAvailablePlatforms.add(jCheckBoxSwitch2);
 
         jPanelSwitch2Units.setLayout(new java.awt.GridLayout(1, 0, -50, 0));
 
         jLabelSwitch2Units.setText("Unitats:");
         jPanelSwitch2Units.add(jLabelSwitch2Units);
+
+        jSpinnerSwitch2Units.setModel(new javax.swing.SpinnerNumberModel(0, 0, null, 1));
+        jSpinnerSwitch2Units.setEnabled(false);
         jPanelSwitch2Units.add(jSpinnerSwitch2Units);
 
         jPanelAvailablePlatforms.add(jPanelSwitch2Units);
@@ -115,14 +152,15 @@ public class DialogAddGame extends javax.swing.JDialog {
 
         jButtonUserAddCancel.setBackground(java.awt.Color.lightGray);
         jButtonUserAddCancel.setText("Cancel·lar");
+        jButtonUserAddCancel.addActionListener(this::jButtonUserAddCancelActionPerformed);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(19, 19, 19)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGap(20, 20, 20)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jTextFieldName, javax.swing.GroupLayout.PREFERRED_SIZE, 240, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -130,21 +168,21 @@ public class DialogAddGame extends javax.swing.JDialog {
                         .addGap(18, 18, 18)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabelGenre)
-                            .addComponent(jComboBoxGenre, javax.swing.GroupLayout.PREFERRED_SIZE, 230, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addContainerGap(23, Short.MAX_VALUE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(jButtonUserAddConfirm, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 18, 18)
-                                .addComponent(jButtonUserAddCancel, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(jPanelAvailablePlatforms, javax.swing.GroupLayout.PREFERRED_SIZE, 488, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(0, 0, Short.MAX_VALUE))))
+                            .addComponent(jComboBoxGenre, javax.swing.GroupLayout.PREFERRED_SIZE, 230, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(jButtonUserAddConfirm, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(jButtonUserAddCancel, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jPanelAvailablePlatforms, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(validationPanel, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(22, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(22, 22, 22)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(9, Short.MAX_VALUE)
+                .addComponent(validationPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabelName)
                     .addComponent(jLabelGenre))
@@ -158,15 +196,50 @@ public class DialogAddGame extends javax.swing.JDialog {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButtonUserAddCancel, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jButtonUserAddConfirm, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(12, Short.MAX_VALUE))
+                .addGap(19, 19, 19))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButtonUserAddConfirmActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonUserAddConfirmActionPerformed
-        // TODO add your handling code here:
+        String name = jTextFieldName.getText();
+        String genre = (String) jComboBoxGenre.getSelectedItem();
+        int pcUnits = (int) jSpinnerPcUnits.getValue();
+        int ps5Units = (int) jSpinnerPs5Units.getValue();
+        int xboxUnits = (int) jSpinnerXboxUnits.getValue();
+        int switch2Units = (int) jSpinnerSwitch2Units.getValue();
+        
+        try {
+            GameGenre gameGenre = GameGenre.fromFormatedName(genre);
+            BusinessLogic.addGame(new Game(name, gameGenre, pcUnits, ps5Units, xboxUnits, switch2Units));
+            
+            javax.swing.JOptionPane.showMessageDialog(this, "Joc creat correctament", "Informació de l'operació", javax.swing.JOptionPane.INFORMATION_MESSAGE);
+            dispose();
+        } catch (GameGenreException e){
+            
+        }
     }//GEN-LAST:event_jButtonUserAddConfirmActionPerformed
+
+    private void jCheckBoxPcActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCheckBoxPcActionPerformed
+        checkBoxInput(jCheckBoxPc, jSpinnerPcUnits);
+    }//GEN-LAST:event_jCheckBoxPcActionPerformed
+
+    private void jCheckBoxPs5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCheckBoxPs5ActionPerformed
+        checkBoxInput(jCheckBoxPs5, jSpinnerPs5Units);
+    }//GEN-LAST:event_jCheckBoxPs5ActionPerformed
+
+    private void jCheckBoxXboxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCheckBoxXboxActionPerformed
+        checkBoxInput(jCheckBoxXbox, jSpinnerXboxUnits);
+    }//GEN-LAST:event_jCheckBoxXboxActionPerformed
+
+    private void jCheckBoxSwitch2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCheckBoxSwitch2ActionPerformed
+        checkBoxInput(jCheckBoxSwitch2, jSpinnerSwitch2Units);
+    }//GEN-LAST:event_jCheckBoxSwitch2ActionPerformed
+
+    private void jButtonUserAddCancelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonUserAddCancelActionPerformed
+        dispose();
+    }//GEN-LAST:event_jButtonUserAddCancelActionPerformed
 
     /**
      * @param args the command line arguments
@@ -197,5 +270,29 @@ public class DialogAddGame extends javax.swing.JDialog {
     private javax.swing.JSpinner jSpinnerSwitch2Units;
     private javax.swing.JSpinner jSpinnerXboxUnits;
     private javax.swing.JTextField jTextFieldName;
+    private org.netbeans.validation.api.ui.swing.ValidationPanel validationPanel;
     // End of variables declaration//GEN-END:variables
+
+    private void fieldsValidation() {
+        jButtonUserAddConfirm.setEnabled(false);
+        ValidationGroup group = validationPanel.getValidationGroup();
+        group.add(jTextFieldName, new MayusValidator());
+        
+        validationPanel.addChangeListener(new ChangeListener() {
+            @Override
+            public void stateChanged(ChangeEvent e) {
+                if (validationPanel.getProblem() == null) jButtonUserAddConfirm.setEnabled(true);
+                else jButtonUserAddConfirm.setEnabled(false);
+            }
+        });
+    }
+    
+    
+    private void checkBoxInput(JCheckBox checkBox, JSpinner spinner) {
+        if (checkBox.isSelected()) spinner.setEnabled(true);
+        else {
+            spinner.setEnabled(false);
+            spinner.setValue(0);
+        }
+    }
 }

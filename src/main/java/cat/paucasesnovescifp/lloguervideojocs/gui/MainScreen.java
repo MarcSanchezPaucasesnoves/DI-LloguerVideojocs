@@ -299,7 +299,7 @@ public class MainScreen extends javax.swing.JFrame {
     }
     
     
-    public void initializeObjects() {
+    private void initializeObjects() {
         try {
             User user1 = new User("Marc", "Sánchez", "Alonso", "00000000A", "000000000");
             BusinessLogic.addUser(user1);
