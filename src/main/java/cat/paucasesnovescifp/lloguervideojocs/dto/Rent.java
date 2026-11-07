@@ -24,6 +24,7 @@ public class Rent {
 
     private Game game;
     private boolean ended;
+    private static final int extraDays = 3;
     
     private static int rentId = 0;
 
@@ -33,7 +34,7 @@ public class Rent {
         setUser(user);
         setPlatform(gameCopy.getPlatform());
         setInitialDate();
-        setFinalDate(3);
+        setFinalDate();
         setGenre(gameCopy.getGame().getGenre());
         
         game = gameCopy.getGame();
@@ -85,8 +86,8 @@ public class Rent {
         return finalDate;
     }
 
-    private void setFinalDate(int extraDays) {
-        this.finalDate = LocalDate.now().plusDays(extraDays);
+    private void setFinalDate() {
+        this.finalDate = getCalculatedFinalDate();
     }
 
     public GameGenre getGenre() {
@@ -102,8 +103,16 @@ public class Rent {
         throw new DtoException("Aquest joc no existeix");
     }
     
+    public static int getRentId() {
+        return rentId;
+    }
+    
+    public static LocalDate getCalculatedFinalDate() {
+        return LocalDate.now().plusDays(extraDays);
+    }
     
     
+ 
     public boolean isEnded() {
         return ended;
     }

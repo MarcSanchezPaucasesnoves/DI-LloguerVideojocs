@@ -4,6 +4,17 @@
  */
 package cat.paucasesnovescifp.lloguervideojocs.gui;
 
+import cat.paucasesnovescifp.lloguervideojocs.dto.Game;
+import cat.paucasesnovescifp.lloguervideojocs.dto.Rent;
+import cat.paucasesnovescifp.lloguervideojocs.dto.User;
+import cat.paucasesnovescifp.lloguervideojocs.logic.BusinessException;
+import cat.paucasesnovescifp.lloguervideojocs.logic.BusinessLogic;
+import cat.paucasesnovescifp.lloguervideojocs.util.GamePlatform;
+import java.time.LocalDate;
+import java.util.ArrayList;
+import javax.swing.JLabel;
+import javax.swing.JRadioButton;
+
 /**
  *
  * @author marc
@@ -11,13 +22,30 @@ package cat.paucasesnovescifp.lloguervideojocs.gui;
 public class DialogRentRecord extends javax.swing.JDialog {
     
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(DialogRentRecord.class.getName());
-
+    
+    private MainScreen mainScreen;
+    
+    private User currentUser;
+    private Game currentGame;
+    private ArrayList<Game> availableGames = new ArrayList<>();
+    
     /**
      * Creates new form DialogRentRecord
      */
     public DialogRentRecord(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
+        mainScreen = (MainScreen) getParent();
+        
+        jRadioButtonPc.setActionCommand("PC");
+        jRadioButtonPs5.setActionCommand("PS5");
+        jRadioButtonXbox.setActionCommand("XBOX");
+        jRadioButtonSwitch2.setActionCommand("SWITCH2");
+        
+        initializeFieldsValues();
+        refreshGameInformation();
+        validateConfirmButton();
+        
     }
 
     /**
@@ -54,7 +82,7 @@ public class DialogRentRecord extends javax.swing.JDialog {
         jPanelGameDetails = new javax.swing.JPanel();
         jLabelGameGenre = new javax.swing.JLabel();
         jLabelGameModifiableGenre = new javax.swing.JLabel();
-        jLabel1 = new javax.swing.JLabel();
+        jLabelAvailableUnits = new javax.swing.JLabel();
         jLabelPc = new javax.swing.JLabel();
         jLabelPs5 = new javax.swing.JLabel();
         jLabelXbox = new javax.swing.JLabel();
@@ -72,13 +100,14 @@ public class DialogRentRecord extends javax.swing.JDialog {
         jPanelRentData.setBorder(javax.swing.BorderFactory.createTitledBorder("Dades del lloguer"));
         jPanelRentData.setLayout(new java.awt.GridLayout(9, 1));
 
-        jPanelNRecord.setLayout(new java.awt.GridLayout());
+        jPanelNRecord.setLayout(new java.awt.GridLayout(1, 0));
 
         jLabelNRecord.setText("Núm. de registre:");
         jPanelNRecord.add(jLabelNRecord);
 
         jTextFieldNRecord.setEditable(false);
         jTextFieldNRecord.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        jTextFieldNRecord.setEnabled(false);
         jTextFieldNRecord.setFocusable(false);
         jPanelNRecord.add(jTextFieldNRecord);
 
@@ -93,12 +122,14 @@ public class DialogRentRecord extends javax.swing.JDialog {
         jLabelGameChoosed.setText("Joc elegit:");
         jPanelRentData.add(jLabelGameChoosed);
 
+        jComboBoxGames.addActionListener(this::jComboBoxGamesActionPerformed);
         jPanelRentData.add(jComboBoxGames);
 
         jLabelInitialDate.setText("Data d'inici:");
         jPanelRentData.add(jLabelInitialDate);
 
         jTextFieldInitialDate.setEditable(false);
+        jTextFieldInitialDate.setEnabled(false);
         jTextFieldInitialDate.setFocusable(false);
         jPanelRentData.add(jTextFieldInitialDate);
 
@@ -106,6 +137,7 @@ public class DialogRentRecord extends javax.swing.JDialog {
         jPanelRentData.add(jLabelFinalDate);
 
         jTextFieldFinalDate.setEditable(false);
+        jTextFieldFinalDate.setEnabled(false);
         jTextFieldFinalDate.setFocusable(false);
         jPanelRentData.add(jTextFieldFinalDate);
 
@@ -114,6 +146,7 @@ public class DialogRentRecord extends javax.swing.JDialog {
 
         buttonGroupPlatforms.add(jRadioButtonPc);
         jRadioButtonPc.setText("PC");
+        jRadioButtonPc.addActionListener(this::jRadioButtonPcActionPerformed);
         jPanelPlatform.add(jRadioButtonPc);
 
         jLabelPcAvailability.setText("()");
@@ -121,6 +154,7 @@ public class DialogRentRecord extends javax.swing.JDialog {
 
         buttonGroupPlatforms.add(jRadioButtonPs5);
         jRadioButtonPs5.setText("PS5");
+        jRadioButtonPs5.addActionListener(this::jRadioButtonPs5ActionPerformed);
         jPanelPlatform.add(jRadioButtonPs5);
 
         jLabelPs5Availability.setText("()");
@@ -128,6 +162,8 @@ public class DialogRentRecord extends javax.swing.JDialog {
 
         buttonGroupPlatforms.add(jRadioButtonXbox);
         jRadioButtonXbox.setText("Xbox");
+        jRadioButtonXbox.setActionCommand("XBOX");
+        jRadioButtonXbox.addActionListener(this::jRadioButtonXboxActionPerformed);
         jPanelPlatform.add(jRadioButtonXbox);
 
         jLabelXboxAvailability.setText("()");
@@ -135,6 +171,8 @@ public class DialogRentRecord extends javax.swing.JDialog {
 
         buttonGroupPlatforms.add(jRadioButtonSwitch2);
         jRadioButtonSwitch2.setText("Switch 2");
+        jRadioButtonSwitch2.setActionCommand("SWITCH2");
+        jRadioButtonSwitch2.addActionListener(this::jRadioButtonSwitch2ActionPerformed);
         jPanelPlatform.add(jRadioButtonSwitch2);
 
         jLabelSwitch2Availability.setText("()");
@@ -144,11 +182,11 @@ public class DialogRentRecord extends javax.swing.JDialog {
         jPanelGameDetails.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jLabelGameGenre.setText("Gènere: ");
-        jPanelGameDetails.add(jLabelGameGenre, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 30, 123, -1));
-        jPanelGameDetails.add(jLabelGameModifiableGenre, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 20, 65, 38));
+        jPanelGameDetails.add(jLabelGameGenre, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 30, -1, -1));
+        jPanelGameDetails.add(jLabelGameModifiableGenre, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 20, 65, 38));
 
-        jLabel1.setText("Unitats disponibles:");
-        jPanelGameDetails.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 60, 224, 38));
+        jLabelAvailableUnits.setText("Unitats disponibles:");
+        jPanelGameDetails.add(jLabelAvailableUnits, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 60, 224, 38));
 
         jLabelPc.setText("PC:");
         jPanelGameDetails.add(jLabelPc, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 100, 69, -1));
@@ -163,16 +201,16 @@ public class DialogRentRecord extends javax.swing.JDialog {
         jPanelGameDetails.add(jLabelSwitch2, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 190, 106, -1));
 
         jLabelModifiablePcAvailability.setText("0");
-        jPanelGameDetails.add(jLabelModifiablePcAvailability, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 100, 54, -1));
+        jPanelGameDetails.add(jLabelModifiablePcAvailability, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 100, 54, -1));
 
         jLabelModifiablePs5Availability.setText("0");
-        jPanelGameDetails.add(jLabelModifiablePs5Availability, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 130, 54, -1));
+        jPanelGameDetails.add(jLabelModifiablePs5Availability, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 130, 54, -1));
 
         jLabelModifiableXboxAvailability.setText("0");
-        jPanelGameDetails.add(jLabelModifiableXboxAvailability, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 160, 54, -1));
+        jPanelGameDetails.add(jLabelModifiableXboxAvailability, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 160, 54, -1));
 
         jLabelModifiableSwitch2Availability.setText("0");
-        jPanelGameDetails.add(jLabelModifiableSwitch2Availability, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 190, 54, -1));
+        jPanelGameDetails.add(jLabelModifiableSwitch2Availability, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 190, 54, -1));
 
         jButtonRentConfirm.setBackground(new java.awt.Color(0, 153, 51));
         jButtonRentConfirm.setFont(new java.awt.Font("Adwaita Sans", 1, 15)); // NOI18N
@@ -182,6 +220,7 @@ public class DialogRentRecord extends javax.swing.JDialog {
 
         jButtonRentCancel.setBackground(java.awt.Color.lightGray);
         jButtonRentCancel.setText("Cancel·lar");
+        jButtonRentCancel.addActionListener(this::jButtonRentCancelActionPerformed);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -223,12 +262,57 @@ public class DialogRentRecord extends javax.swing.JDialog {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButtonRentConfirmActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonRentConfirmActionPerformed
-        // TODO add your handling code here:
+       GamePlatform selectedPlatform = GamePlatform.valueOf(buttonGroupPlatforms.getSelection().getActionCommand());
+       
+        try {
+            BusinessLogic.addRent(new Rent(currentUser, BusinessLogic.rentGameCopy(currentGame, selectedPlatform)));
+            
+            javax.swing.JOptionPane.showMessageDialog(this, "Lloguer creat correctament", "Informació de l'operació", javax.swing.JOptionPane.INFORMATION_MESSAGE);
+            mainScreen.refreshMainScreen();
+            dispose();
+        } catch (BusinessException e){
+            
+        }
     }//GEN-LAST:event_jButtonRentConfirmActionPerformed
 
     private void jComboBoxUsersActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBoxUsersActionPerformed
-        // TODO add your handling code here:
+        int index = jComboBoxUsers.getSelectedIndex();
+        if (index == -1 || BusinessLogic.getUserList().isEmpty()) return;
+        
+        currentUser = BusinessLogic.getUserList().get(index);
+        
     }//GEN-LAST:event_jComboBoxUsersActionPerformed
+
+    private void jComboBoxGamesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBoxGamesActionPerformed
+        int index = jComboBoxGames.getSelectedIndex();
+        if (index == -1 || availableGames.isEmpty()) return;
+        
+        buttonGroupPlatforms.clearSelection();
+        currentGame = availableGames.get(index);
+        refreshGameInformation();
+        validateConfirmButton();
+        
+    }//GEN-LAST:event_jComboBoxGamesActionPerformed
+
+    private void jButtonRentCancelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonRentCancelActionPerformed
+        dispose();
+    }//GEN-LAST:event_jButtonRentCancelActionPerformed
+
+    private void jRadioButtonPcActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioButtonPcActionPerformed
+        validateConfirmButton();
+    }//GEN-LAST:event_jRadioButtonPcActionPerformed
+
+    private void jRadioButtonPs5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioButtonPs5ActionPerformed
+        validateConfirmButton();
+    }//GEN-LAST:event_jRadioButtonPs5ActionPerformed
+
+    private void jRadioButtonXboxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioButtonXboxActionPerformed
+        validateConfirmButton();
+    }//GEN-LAST:event_jRadioButtonXboxActionPerformed
+
+    private void jRadioButtonSwitch2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioButtonSwitch2ActionPerformed
+        validateConfirmButton();
+    }//GEN-LAST:event_jRadioButtonSwitch2ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -241,7 +325,7 @@ public class DialogRentRecord extends javax.swing.JDialog {
     private javax.swing.JButton jButtonRentConfirm;
     private javax.swing.JComboBox<String> jComboBoxGames;
     private javax.swing.JComboBox<String> jComboBoxUsers;
-    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabelAvailableUnits;
     private javax.swing.JLabel jLabelFinalDate;
     private javax.swing.JLabel jLabelGameChoosed;
     private javax.swing.JLabel jLabelGameGenre;
@@ -273,4 +357,87 @@ public class DialogRentRecord extends javax.swing.JDialog {
     private javax.swing.JTextField jTextFieldInitialDate;
     private javax.swing.JTextField jTextFieldNRecord;
     // End of variables declaration//GEN-END:variables
+
+    private void initializeFieldsValues() {
+        jButtonRentConfirm.setEnabled(false);
+        
+        jTextFieldNRecord.setText(String.valueOf(Rent.getRentId()));
+        jTextFieldInitialDate.setText(LocalDate.now().toString());
+        jTextFieldFinalDate.setText(Rent.getCalculatedFinalDate().toString());
+        
+        for (User user : BusinessLogic.getUserList()) {
+            jComboBoxUsers.addItem(user.getNameFirstSurname() + " - " + user.getDni());
+        }
+        
+        for (Game game : BusinessLogic.getGameList()) {
+            int totalAvailableGameUnits = 0;
+            totalAvailableGameUnits += game.getAvailableGameUnits(GamePlatform.PC);
+            totalAvailableGameUnits += game.getAvailableGameUnits(GamePlatform.PS5);
+            totalAvailableGameUnits += game.getAvailableGameUnits(GamePlatform.XBOX);
+            totalAvailableGameUnits += game.getAvailableGameUnits(GamePlatform.SWITCH2);
+            
+            if (totalAvailableGameUnits > 0) {
+                jComboBoxGames.addItem(game.getName());
+                availableGames.add(game);
+            }
+            
+        }
+        
+        int gameIndex = jComboBoxGames.getSelectedIndex();
+        int userIndex = jComboBoxUsers.getSelectedIndex();
+        if (gameIndex != 1) currentGame = availableGames.get(gameIndex);
+        if (userIndex != 1) currentUser = BusinessLogic.getUserList().get(userIndex);
+    }
+    
+    private void refreshGameInformation() {
+        int pcUnits = currentGame.getAvailableGameUnits(GamePlatform.PC);
+        int ps5Units = currentGame.getAvailableGameUnits(GamePlatform.PS5);
+        int xboxUnits = currentGame.getAvailableGameUnits(GamePlatform.XBOX);
+        int switch2Units = currentGame.getAvailableGameUnits(GamePlatform.SWITCH2);
+        
+        changePlatformSectionAvailability(jLabelPcAvailability, jRadioButtonPc, pcUnits);
+        changePlatformSectionAvailability(jLabelPs5Availability, jRadioButtonPs5, ps5Units);
+        changePlatformSectionAvailability(jLabelXboxAvailability, jRadioButtonXbox, xboxUnits);
+        changePlatformSectionAvailability(jLabelSwitch2Availability, jRadioButtonSwitch2, switch2Units);
+        
+        if (currentGame != null) jLabelGameModifiableGenre.setText(currentGame.getGenre().getFormatedName());
+        jLabelModifiablePcAvailability.setText(String.valueOf(pcUnits));
+        jLabelModifiablePs5Availability.setText(String.valueOf(ps5Units));
+        jLabelModifiableXboxAvailability.setText(String.valueOf(xboxUnits));
+        jLabelModifiableSwitch2Availability.setText(String.valueOf(switch2Units));
+        
+    }
+    
+    private void changePlatformSectionAvailability(JLabel label, JRadioButton radioButton, int platformValue) {
+        String singleText = " unitat disponible";
+        String pluralText = " unitats disponibles";
+        
+        switch (platformValue) {
+            case 1:
+                label.setText("(" + platformValue + singleText + ")");
+                label.setEnabled(true);
+                radioButton.setEnabled(true);
+                break;
+            case 0:
+                label.setText("(" + platformValue + pluralText + ")");
+                label.setEnabled(false);
+                radioButton.setEnabled(false);
+                break;
+            default:
+                label.setText("(" + platformValue + pluralText + ")");
+                label.setEnabled(true);
+                radioButton.setEnabled(true);
+                break;
+        }
+
+    }
+    
+    
+    private void validateConfirmButton() {
+        jButtonRentConfirm.setEnabled(
+            jComboBoxUsers.getSelectedItem() != null && 
+            !BusinessLogic.getUserList().isEmpty() && 
+            buttonGroupPlatforms.getSelection() != null
+        );
+    }
 }

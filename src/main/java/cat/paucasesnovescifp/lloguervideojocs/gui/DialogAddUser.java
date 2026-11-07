@@ -13,7 +13,6 @@ import javax.swing.event.ChangeListener;
 import org.netbeans.validation.api.builtin.stringvalidation.DniValidator;
 import org.netbeans.validation.api.builtin.stringvalidation.MayusValidator;
 import org.netbeans.validation.api.builtin.stringvalidation.PhoneNumberValidator;
-import org.netbeans.validation.api.builtin.stringvalidation.StringValidators;
 import org.netbeans.validation.api.ui.ValidationGroup;
 
 /**
@@ -109,6 +108,7 @@ public class DialogAddUser extends javax.swing.JDialog {
         jPanelUserData.add(jLabelEntryDate);
 
         jTextEntryDate.setEditable(false);
+        jTextEntryDate.setEnabled(false);
         jTextEntryDate.setFocusable(false);
         jPanelUserData.add(jTextEntryDate);
 

@@ -33,7 +33,7 @@ public class MainScreen extends javax.swing.JFrame {
         initComponents();
         model = (DefaultTableModel) jTableVideogameRental.getModel();
         
-        initializeObjects(); 
+        initializeObjects();
         refreshMainScreen();
         
         
@@ -306,7 +306,7 @@ public class MainScreen extends javax.swing.JFrame {
             User user2 = new User("Pau", "Ferrer", "Tous", "11111111A", "111111111");
             BusinessLogic.addUser(user2);
             
-            Game game1 = new Game("Ark Survival Evolved", GameGenre.SURVIVAL, 0, 24, 0, 2);
+            Game game1 = new Game("Ark Survival Evolved", GameGenre.SURVIVAL, 0, 1, 0, 2);
             BusinessLogic.addGame(game1);
             Game game2 = new Game("Forza Horizon 4", GameGenre.PLATFORMER, 34, 0, 98, 0);
             BusinessLogic.addGame(game2);

@@ -4,7 +4,6 @@
  */
 package cat.paucasesnovescifp.lloguervideojocs.gui;
 
-import cat.paucasesnovescifp.lloguervideojocs.dto.DtoException;
 import cat.paucasesnovescifp.lloguervideojocs.dto.Game;
 import cat.paucasesnovescifp.lloguervideojocs.logic.BusinessLogic;
 import cat.paucasesnovescifp.lloguervideojocs.util.GameGenre;

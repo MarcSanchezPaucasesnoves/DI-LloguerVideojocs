@@ -102,6 +102,7 @@
                 <Property name="cursor" type="java.awt.Cursor" editor="org.netbeans.modules.form.editors2.CursorEditor">
                   <Color id="Cursor Por defecto"/>
                 </Property>
+                <Property name="enabled" type="boolean" value="false"/>
                 <Property name="focusable" type="boolean" value="false"/>
               </Properties>
             </Component>
@@ -136,6 +137,9 @@
               <StringArray count="0"/>
             </Property>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jComboBoxGamesActionPerformed"/>
+          </Events>
           <AuxValues>
             <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
           </AuxValues>
@@ -148,6 +152,7 @@
         <Component class="javax.swing.JTextField" name="jTextFieldInitialDate">
           <Properties>
             <Property name="editable" type="boolean" value="false"/>
+            <Property name="enabled" type="boolean" value="false"/>
             <Property name="focusable" type="boolean" value="false"/>
           </Properties>
         </Component>
@@ -159,6 +164,7 @@
         <Component class="javax.swing.JTextField" name="jTextFieldFinalDate">
           <Properties>
             <Property name="editable" type="boolean" value="false"/>
+            <Property name="enabled" type="boolean" value="false"/>
             <Property name="focusable" type="boolean" value="false"/>
           </Properties>
         </Component>
@@ -185,6 +191,9 @@
             </Property>
             <Property name="text" type="java.lang.String" value="PC"/>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jRadioButtonPcActionPerformed"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JLabel" name="jLabelPcAvailability">
           <Properties>
@@ -198,6 +207,9 @@
             </Property>
             <Property name="text" type="java.lang.String" value="PS5"/>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jRadioButtonPs5ActionPerformed"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JLabel" name="jLabelPs5Availability">
           <Properties>
@@ -210,7 +222,11 @@
               <ComponentRef name="buttonGroupPlatforms"/>
             </Property>
             <Property name="text" type="java.lang.String" value="Xbox"/>
+            <Property name="actionCommand" type="java.lang.String" value="XBOX"/>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jRadioButtonXboxActionPerformed"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JLabel" name="jLabelXboxAvailability">
           <Properties>
@@ -223,7 +239,11 @@
               <ComponentRef name="buttonGroupPlatforms"/>
             </Property>
             <Property name="text" type="java.lang.String" value="Switch 2"/>
+            <Property name="actionCommand" type="java.lang.String" value="SWITCH2"/>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jRadioButtonSwitch2ActionPerformed"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JLabel" name="jLabelSwitch2Availability">
           <Properties>
@@ -251,18 +271,18 @@
           </Properties>
           <Constraints>
             <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-              <AbsoluteConstraints x="20" y="30" width="123" height="-1"/>
+              <AbsoluteConstraints x="20" y="30" width="-1" height="-1"/>
             </Constraint>
           </Constraints>
         </Component>
         <Component class="javax.swing.JLabel" name="jLabelGameModifiableGenre">
           <Constraints>
             <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-              <AbsoluteConstraints x="150" y="20" width="65" height="38"/>
+              <AbsoluteConstraints x="110" y="20" width="65" height="38"/>
             </Constraint>
           </Constraints>
         </Component>
-        <Component class="javax.swing.JLabel" name="jLabel1">
+        <Component class="javax.swing.JLabel" name="jLabelAvailableUnits">
           <Properties>
             <Property name="text" type="java.lang.String" value="Unitats disponibles:"/>
           </Properties>
@@ -318,7 +338,7 @@
           </Properties>
           <Constraints>
             <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-              <AbsoluteConstraints x="150" y="100" width="54" height="-1"/>
+              <AbsoluteConstraints x="110" y="100" width="54" height="-1"/>
             </Constraint>
           </Constraints>
         </Component>
@@ -328,7 +348,7 @@
           </Properties>
           <Constraints>
             <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-              <AbsoluteConstraints x="150" y="130" width="54" height="-1"/>
+              <AbsoluteConstraints x="110" y="130" width="54" height="-1"/>
             </Constraint>
           </Constraints>
         </Component>
@@ -338,7 +358,7 @@
           </Properties>
           <Constraints>
             <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-              <AbsoluteConstraints x="150" y="160" width="54" height="-1"/>
+              <AbsoluteConstraints x="110" y="160" width="54" height="-1"/>
             </Constraint>
           </Constraints>
         </Component>
@@ -348,7 +368,7 @@
           </Properties>
           <Constraints>
             <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-              <AbsoluteConstraints x="150" y="190" width="54" height="-1"/>
+              <AbsoluteConstraints x="110" y="190" width="54" height="-1"/>
             </Constraint>
           </Constraints>
         </Component>
@@ -378,6 +398,9 @@
         </Property>
         <Property name="text" type="java.lang.String" value="Cancel&#xb7;lar"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButtonRentCancelActionPerformed"/>
+      </Events>
     </Component>
   </SubComponents>
 </Form>
