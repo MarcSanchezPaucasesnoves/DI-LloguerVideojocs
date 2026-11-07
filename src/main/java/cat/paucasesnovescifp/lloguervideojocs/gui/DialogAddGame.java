@@ -5,6 +5,7 @@
 package cat.paucasesnovescifp.lloguervideojocs.gui;
 
 import cat.paucasesnovescifp.lloguervideojocs.dto.Game;
+import cat.paucasesnovescifp.lloguervideojocs.logic.BusinessException;
 import cat.paucasesnovescifp.lloguervideojocs.logic.BusinessLogic;
 import cat.paucasesnovescifp.lloguervideojocs.util.GameGenre;
 import cat.paucasesnovescifp.lloguervideojocs.util.GameGenreException;
@@ -215,8 +216,8 @@ public class DialogAddGame extends javax.swing.JDialog {
             
             javax.swing.JOptionPane.showMessageDialog(this, "Joc creat correctament", "Informació de l'operació", javax.swing.JOptionPane.INFORMATION_MESSAGE);
             dispose();
-        } catch (GameGenreException e){
-            
+        } catch (GameGenreException | BusinessException e){
+            javax.swing.JOptionPane.showMessageDialog(this, e.getMessage(), "Error al crear el joc", javax.swing.JOptionPane.ERROR_MESSAGE);
         }
     }//GEN-LAST:event_jButtonUserAddConfirmActionPerformed
 

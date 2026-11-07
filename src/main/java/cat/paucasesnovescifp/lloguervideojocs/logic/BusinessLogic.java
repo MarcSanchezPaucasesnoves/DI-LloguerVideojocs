@@ -57,7 +57,10 @@ public class BusinessLogic {
     
     
     
-    public static void addGame(Game game){
+    public static void addGame(Game game) throws BusinessException{
+        for (Game currentGame : gameList) {
+            if (currentGame.getName().equals(game.getName())) throw new BusinessException("Ja hi ha un joc amb aquest nom.");
+        }
         gameList.add(game);
     }
     
