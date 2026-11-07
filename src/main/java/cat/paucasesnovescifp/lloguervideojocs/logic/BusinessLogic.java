@@ -36,7 +36,10 @@ public class BusinessLogic {
     
     
     
-    public static void addUser(User user){
+    public static void addUser(User user) throws BusinessException{
+        for (User currentUser : userList) {
+            if (currentUser.getDni().equals(user.getDni())) throw new BusinessException("Ja hi ha un usuari amb aquest DNI.");
+        }
         userList.add(user);
     }
     

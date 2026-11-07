@@ -6,6 +6,7 @@ package cat.paucasesnovescifp.lloguervideojocs.gui;
 
 import cat.paucasesnovescifp.lloguervideojocs.dto.DtoException;
 import cat.paucasesnovescifp.lloguervideojocs.dto.User;
+import cat.paucasesnovescifp.lloguervideojocs.logic.BusinessException;
 import cat.paucasesnovescifp.lloguervideojocs.logic.BusinessLogic;
 import java.time.LocalDate;
 import javax.swing.event.ChangeEvent;
@@ -166,8 +167,8 @@ public class DialogAddUser extends javax.swing.JDialog {
             BusinessLogic.addUser(new User(name, firstSurname, secondSurname, dni, phoneNumber));
             javax.swing.JOptionPane.showMessageDialog(this, "Usuari creat correctament", "Informació de l'operació", javax.swing.JOptionPane.INFORMATION_MESSAGE);
             dispose();
-        } catch (DtoException e){
-            
+        } catch (DtoException | BusinessException e){
+            javax.swing.JOptionPane.showMessageDialog(this, e.getMessage(), "Error al crear l'usuari", javax.swing.JOptionPane.ERROR_MESSAGE);
         }
         
         
