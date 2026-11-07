@@ -8,6 +8,7 @@ import cat.paucasesnovescifp.lloguervideojocs.dto.DtoException;
 import cat.paucasesnovescifp.lloguervideojocs.dto.User;
 import cat.paucasesnovescifp.lloguervideojocs.logic.BusinessException;
 import cat.paucasesnovescifp.lloguervideojocs.logic.BusinessLogic;
+import cat.paucasesnovescifp.lloguervideojocs.util.StringFormater;
 import java.time.LocalDate;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
@@ -33,7 +34,7 @@ public class DialogAddUser extends javax.swing.JDialog {
         
         fieldsValidation();
         
-        jTextEntryDate.setText(LocalDate.now().toString());
+        jTextEntryDate.setText(StringFormater.dateToString(LocalDate.now()));
     }
 
     /**

@@ -10,6 +10,7 @@ import cat.paucasesnovescifp.lloguervideojocs.dto.User;
 import cat.paucasesnovescifp.lloguervideojocs.logic.BusinessException;
 import cat.paucasesnovescifp.lloguervideojocs.logic.BusinessLogic;
 import cat.paucasesnovescifp.lloguervideojocs.util.GamePlatform;
+import cat.paucasesnovescifp.lloguervideojocs.util.StringFormater;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import javax.swing.JLabel;
@@ -362,8 +363,8 @@ public class DialogRentRecord extends javax.swing.JDialog {
         jButtonRentConfirm.setEnabled(false);
         
         jTextFieldNRecord.setText(String.valueOf(Rent.getRentId()));
-        jTextFieldInitialDate.setText(LocalDate.now().toString());
-        jTextFieldFinalDate.setText(Rent.getCalculatedFinalDate().toString());
+        jTextFieldInitialDate.setText(StringFormater.dateToString(LocalDate.now()));
+        jTextFieldFinalDate.setText(StringFormater.dateToString(Rent.getCalculatedFinalDate()));
         
         for (User user : BusinessLogic.getUserList()) {
             jComboBoxUsers.addItem(user.getNameFirstSurname() + " - " + user.getDni());

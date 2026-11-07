@@ -12,6 +12,7 @@ import cat.paucasesnovescifp.lloguervideojocs.logic.BusinessException;
 import cat.paucasesnovescifp.lloguervideojocs.logic.BusinessLogic;
 import cat.paucasesnovescifp.lloguervideojocs.util.GameGenre;
 import cat.paucasesnovescifp.lloguervideojocs.util.GamePlatform;
+import cat.paucasesnovescifp.lloguervideojocs.util.StringFormater;
 import java.util.ArrayList;
 import java.util.Locale;
 import javax.swing.table.DefaultTableModel;
@@ -289,8 +290,8 @@ public class MainScreen extends javax.swing.JFrame {
                     rent.getGameName(),
                     rent.getUser().getNameFirstSurname(),
                     rent.getPlatform().toString(),
-                    rent.getInitialDate().toString(),
-                    rent.getFinalDate().toString(),
+                    StringFormater.dateToString(rent.getInitialDate()),
+                    StringFormater.dateToString(rent.getFinalDate()),
                     rent.getGenre().toString()
                 }
             );
