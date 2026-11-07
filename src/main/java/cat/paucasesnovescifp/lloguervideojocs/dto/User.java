@@ -4,7 +4,7 @@
  */
 package cat.paucasesnovescifp.lloguervideojocs.dto;
 
-import cat.paucasesnovescifp.lloguervideojocs.util.DataValidator;
+import cat.paucasesnovescifp.lloguervideojocs.lib.ValidationAPI;
 import java.time.LocalDate;
 
 /**
@@ -52,26 +52,29 @@ public class User {
         return registerDate;
     }
 
-    private void setName(String name) {
+    private void setName(String name) throws DtoException{
+        ValidationAPI.startsWithCapital(name);
         this.name = name;
     }
 
-    private void setFirstSurname(String firstSurname) {
+    private void setFirstSurname(String firstSurname) throws DtoException{
+        ValidationAPI.startsWithCapital(firstSurname);
         this.firstSurname = firstSurname;
     }
 
-    private void setSecondSurname(String secondSurname) {
+    private void setSecondSurname(String secondSurname) throws DtoException{
+        ValidationAPI.startsWithCapital(secondSurname);
         this.secondSurname = secondSurname;
     }
 
     private void setDni(String dni) throws DtoException{
-        if (DataValidator.isDniValid(dni)) this.dni = dni;
-        else throw new DtoException("El dni no és vàlid. Ha de tenir vuit nombres i una lletra. No pot tenir espais en blanc.");
+        ValidationAPI.isDniValid(dni);
+        this.dni = dni;
     }
 
     private void setPhoneNumber(String phoneNumber) throws DtoException{
-        if (DataValidator.isPhoneNumberValid(phoneNumber)) this.phoneNumber = phoneNumber;
-        else throw new DtoException("El nombre de telèfon no és vàlid. Ha de tenir nou nombres i no hi poden haver espais en blanc.");
+        ValidationAPI.isPhoneNumberValid(phoneNumber);
+        this.phoneNumber = phoneNumber;
     }
     
     public String getNameFirstSurname() {

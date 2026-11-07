@@ -13,6 +13,7 @@ import cat.paucasesnovescifp.lloguervideojocs.logic.BusinessLogic;
 import cat.paucasesnovescifp.lloguervideojocs.util.GameGenre;
 import cat.paucasesnovescifp.lloguervideojocs.util.GamePlatform;
 import java.util.ArrayList;
+import java.util.Locale;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -32,27 +33,7 @@ public class MainScreen extends javax.swing.JFrame {
         initComponents();
         model = (DefaultTableModel) jTableVideogameRental.getModel();
         
-        try {
-            User user1 = new User("Marc", "Sánchez", "Alonso", "00000000A", "000000000");
-            BusinessLogic.addUser(user1);
-            User user2 = new User("Pau", "Ferrer", "Tous", "11111111A", "111111111");
-            BusinessLogic.addUser(user2);
-            
-            Game game1 = new Game("Ark Survival Evolved", GameGenre.SURVIVAL, 0, 24, 0, 2);
-            BusinessLogic.addGame(game1);
-            Game game2 = new Game("Forza Horizon 4", GameGenre.PLATFORMER, 34, 0, 98, 0);
-            BusinessLogic.addGame(game2);
-            
-            Rent rent1 = new Rent(user1, BusinessLogic.rentGameCopy(game1, GamePlatform.SWITCH2));
-            BusinessLogic.addRent(rent1);
-            Rent rent2 = new Rent(user2, BusinessLogic.rentGameCopy(game2, GamePlatform.PC));
-            BusinessLogic.addRent(rent2);
-            
-        } catch (DtoException | BusinessException e) {
-            e.printStackTrace();
-        }
-        
-        
+        initializeObjects(); 
         refreshMainScreen();
         
         
@@ -265,7 +246,14 @@ public class MainScreen extends javax.swing.JFrame {
         //</editor-fold>
 
         /* Create and display the form */
-        java.awt.EventQueue.invokeLater(() -> new MainScreen().setVisible(true));
+        java.awt.EventQueue.invokeLater(new Runnable() {
+            @Override
+            public void run() {
+                Locale.setDefault(Locale.of("ca", "ES"));
+                
+                new MainScreen().setVisible(true);
+            }
+        });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -308,5 +296,28 @@ public class MainScreen extends javax.swing.JFrame {
             );
         }
         jLabelModifiableTotalRents.setText(String.valueOf(nRents));
+    }
+    
+    
+    public void initializeObjects() {
+        try {
+            User user1 = new User("Marc", "Sánchez", "Alonso", "00000000A", "000000000");
+            BusinessLogic.addUser(user1);
+            User user2 = new User("Pau", "Ferrer", "Tous", "11111111A", "111111111");
+            BusinessLogic.addUser(user2);
+            
+            Game game1 = new Game("Ark Survival Evolved", GameGenre.SURVIVAL, 0, 24, 0, 2);
+            BusinessLogic.addGame(game1);
+            Game game2 = new Game("Forza Horizon 4", GameGenre.PLATFORMER, 34, 0, 98, 0);
+            BusinessLogic.addGame(game2);
+            
+            Rent rent1 = new Rent(user1, BusinessLogic.rentGameCopy(game1, GamePlatform.SWITCH2));
+            BusinessLogic.addRent(rent1);
+            Rent rent2 = new Rent(user2, BusinessLogic.rentGameCopy(game2, GamePlatform.PC));
+            BusinessLogic.addRent(rent2);
+            
+        } catch (DtoException | BusinessException e) {
+            e.printStackTrace();
+        }
     }
 }

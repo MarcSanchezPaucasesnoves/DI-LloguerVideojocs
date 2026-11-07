@@ -4,6 +4,19 @@
  */
 package cat.paucasesnovescifp.lloguervideojocs.gui;
 
+import cat.paucasesnovescifp.lloguervideojocs.dto.DtoException;
+import cat.paucasesnovescifp.lloguervideojocs.dto.User;
+import cat.paucasesnovescifp.lloguervideojocs.logic.BusinessLogic;
+import java.time.LocalDate;
+import java.util.Locale;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
+import org.netbeans.validation.api.builtin.stringvalidation.DniValidator;
+import org.netbeans.validation.api.builtin.stringvalidation.MayusValidator;
+import org.netbeans.validation.api.builtin.stringvalidation.PhoneNumberValidator;
+import org.netbeans.validation.api.builtin.stringvalidation.StringValidators;
+import org.netbeans.validation.api.ui.ValidationGroup;
+
 /**
  *
  * @author marc
@@ -18,6 +31,24 @@ public class DialogAddUser extends javax.swing.JDialog {
     public DialogAddUser(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
+        
+        jButtonUserAddConfirm.setEnabled(false);
+        ValidationGroup group = validationPanel.getValidationGroup();
+        group.add(jTextFieldName, new MayusValidator());
+        group.add(jTextFieldFirstSurname, new MayusValidator());
+        group.add(jTextFieldSecondSurname, new MayusValidator());
+        group.add(jTextFieldDni, new DniValidator());
+        group.add(jTextFieldPhoneNumber, new PhoneNumberValidator());
+        
+        validationPanel.addChangeListener(new ChangeListener() {
+            @Override
+            public void stateChanged(ChangeEvent e) {
+                if (validationPanel.getProblem() == null) jButtonUserAddConfirm.setEnabled(true);
+                else jButtonUserAddConfirm.setEnabled(false);
+            }
+        });
+        
+        jTextEntryDate.setText(LocalDate.now().toString());
     }
 
     /**
@@ -44,9 +75,9 @@ public class DialogAddUser extends javax.swing.JDialog {
         jTextEntryDate = new javax.swing.JTextField();
         jButtonUserAddConfirm = new javax.swing.JButton();
         jButtonUserAddCancel = new javax.swing.JButton();
+        validationPanel = new org.netbeans.validation.api.ui.swing.ValidationPanel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        setMinimumSize(new java.awt.Dimension(530, 400));
         setResizable(false);
         setSize(new java.awt.Dimension(0, 0));
 
@@ -57,30 +88,35 @@ public class DialogAddUser extends javax.swing.JDialog {
         jLabelName.setText("Nom *:");
         jPanelUserData.add(jLabelName);
 
+        jTextFieldName.setName("Nom"); // NOI18N
         jTextFieldName.addActionListener(this::jTextFieldNameActionPerformed);
         jPanelUserData.add(jTextFieldName);
 
         jLabelFirstSurname.setText("Llinatge 1 *:");
         jPanelUserData.add(jLabelFirstSurname);
 
+        jTextFieldFirstSurname.setName("Llinatge 1"); // NOI18N
         jTextFieldFirstSurname.addActionListener(this::jTextFieldFirstSurnameActionPerformed);
         jPanelUserData.add(jTextFieldFirstSurname);
 
         jLabelSecondSurname.setText("Llinatge 2 *:");
         jPanelUserData.add(jLabelSecondSurname);
 
+        jTextFieldSecondSurname.setName("Llinatge 2"); // NOI18N
         jTextFieldSecondSurname.addActionListener(this::jTextFieldSecondSurnameActionPerformed);
         jPanelUserData.add(jTextFieldSecondSurname);
 
         jLabelDni.setText("DNI *:");
         jPanelUserData.add(jLabelDni);
 
+        jTextFieldDni.setName("Dni"); // NOI18N
         jTextFieldDni.addActionListener(this::jTextFieldDniActionPerformed);
         jPanelUserData.add(jTextFieldDni);
 
         jLabelPhoneNumber.setText("Telèfon *:");
         jPanelUserData.add(jLabelPhoneNumber);
 
+        jTextFieldPhoneNumber.setName("Telèfon"); // NOI18N
         jTextFieldPhoneNumber.addActionListener(this::jTextFieldPhoneNumberActionPerformed);
         jPanelUserData.add(jTextFieldPhoneNumber);
 
@@ -99,6 +135,7 @@ public class DialogAddUser extends javax.swing.JDialog {
 
         jButtonUserAddCancel.setBackground(java.awt.Color.lightGray);
         jButtonUserAddCancel.setText("Cancel·lar");
+        jButtonUserAddCancel.addActionListener(this::jButtonUserAddCancelActionPerformed);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -111,23 +148,44 @@ public class DialogAddUser extends javax.swing.JDialog {
                 .addComponent(jButtonUserAddCancel, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(21, 21, 21))
             .addComponent(jPanelUserData, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addGap(16, 16, 16)
+                .addComponent(validationPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 495, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(19, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(16, Short.MAX_VALUE)
+                .addComponent(validationPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanelUserData, javax.swing.GroupLayout.PREFERRED_SIZE, 320, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButtonUserAddCancel, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jButtonUserAddConfirm, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(22, Short.MAX_VALUE))
+                .addContainerGap())
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButtonUserAddConfirmActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonUserAddConfirmActionPerformed
-        // TODO add your handling code here:
+        String name = jTextFieldName.getText();
+        String firstSurname = jTextFieldFirstSurname.getText();
+        String secondSurname = jTextFieldSecondSurname.getText();
+        String dni = jTextFieldDni.getText();
+        String phoneNumber = jTextFieldPhoneNumber.getText();
+        
+        try {
+            BusinessLogic.addUser(new User(name, firstSurname, secondSurname, dni, phoneNumber));
+            javax.swing.JOptionPane.showMessageDialog(this, "Usuari creat correctament", "Informació de l'operació", javax.swing.JOptionPane.INFORMATION_MESSAGE);
+            dispose();
+        } catch (DtoException e){
+            
+        }
+        
+        
     }//GEN-LAST:event_jButtonUserAddConfirmActionPerformed
 
     private void jTextFieldPhoneNumberActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextFieldPhoneNumberActionPerformed
@@ -150,6 +208,10 @@ public class DialogAddUser extends javax.swing.JDialog {
         // TODO add your handling code here:
     }//GEN-LAST:event_jTextFieldNameActionPerformed
 
+    private void jButtonUserAddCancelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonUserAddCancelActionPerformed
+        dispose();
+    }//GEN-LAST:event_jButtonUserAddCancelActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -171,5 +233,6 @@ public class DialogAddUser extends javax.swing.JDialog {
     private javax.swing.JTextField jTextFieldName;
     private javax.swing.JTextField jTextFieldPhoneNumber;
     private javax.swing.JTextField jTextFieldSecondSurname;
+    private org.netbeans.validation.api.ui.swing.ValidationPanel validationPanel;
     // End of variables declaration//GEN-END:variables
 }
