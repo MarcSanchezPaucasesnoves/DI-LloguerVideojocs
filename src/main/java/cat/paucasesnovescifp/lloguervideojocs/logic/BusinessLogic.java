@@ -87,6 +87,17 @@ public class BusinessLogic {
     }
     
     
+    public static Game getGame(String name) throws BusinessException{
+        for (Game game : gameList) {
+            if (game.getName().equals(name)) {
+                return game;
+            }
+        }
+        
+        throw new BusinessException("No hi ha cap joc amb aquest nom.");
+    }
+    
+    
     
     public static void addRent(Rent rent){
         rentList.add(rent);

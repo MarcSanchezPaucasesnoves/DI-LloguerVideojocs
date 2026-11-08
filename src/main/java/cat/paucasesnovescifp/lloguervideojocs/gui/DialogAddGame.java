@@ -77,11 +77,11 @@ public class DialogAddGame extends javax.swing.JDialog {
         setIconImage(new javax.swing.ImageIcon(getClass().getResource("/gameControllerIcon.png")).getImage());
         setResizable(false);
 
-        jLabelName.setText("Nom *:");
+        jLabelName.setText("<html>Nom <font color='red'>*</font>:</html>");
 
         jTextFieldName.setName("Nom"); // NOI18N
 
-        jLabelGenre.setText("Gènere *:");
+        jLabelGenre.setText("<html>Gènere <font color='red'>*</font>:</html>");
 
         jPanelAvailablePlatforms.setBorder(javax.swing.BorderFactory.createTitledBorder("Plataformes disponibles"));
         jPanelAvailablePlatforms.setLayout(new java.awt.GridLayout(4, 2, 0, 25));
@@ -149,10 +149,12 @@ public class DialogAddGame extends javax.swing.JDialog {
         jButtonUserAddConfirm.setBackground(new java.awt.Color(0, 153, 51));
         jButtonUserAddConfirm.setFont(new java.awt.Font("Adwaita Sans", 1, 15)); // NOI18N
         jButtonUserAddConfirm.setForeground(new java.awt.Color(255, 255, 255));
+        jButtonUserAddConfirm.setIcon(new javax.swing.ImageIcon(getClass().getResource("/confirmIcon.png"))); // NOI18N
         jButtonUserAddConfirm.setText("Confirmar");
         jButtonUserAddConfirm.addActionListener(this::jButtonUserAddConfirmActionPerformed);
 
         jButtonUserAddCancel.setBackground(java.awt.Color.lightGray);
+        jButtonUserAddCancel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/closeIcon.png"))); // NOI18N
         jButtonUserAddCancel.setText("Cancel·lar");
         jButtonUserAddCancel.addActionListener(this::jButtonUserAddCancelActionPerformed);
 
@@ -166,10 +168,10 @@ public class DialogAddGame extends javax.swing.JDialog {
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jTextFieldName, javax.swing.GroupLayout.PREFERRED_SIZE, 240, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabelName))
+                            .addComponent(jLabelName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(18, 18, 18)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabelGenre)
+                            .addComponent(jLabelGenre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jComboBoxGenre, javax.swing.GroupLayout.PREFERRED_SIZE, 230, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addComponent(jButtonUserAddConfirm, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -186,8 +188,8 @@ public class DialogAddGame extends javax.swing.JDialog {
                 .addComponent(validationPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabelName)
-                    .addComponent(jLabelGenre))
+                    .addComponent(jLabelName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabelGenre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jTextFieldName, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)

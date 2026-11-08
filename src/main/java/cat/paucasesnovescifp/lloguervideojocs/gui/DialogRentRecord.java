@@ -68,9 +68,9 @@ public class DialogRentRecord extends javax.swing.JDialog {
         jLabelGameChoosed = new javax.swing.JLabel();
         jComboBoxGames = new javax.swing.JComboBox<>();
         jLabelInitialDate = new javax.swing.JLabel();
-        jTextFieldInitialDate = new javax.swing.JTextField();
+        jModifiableLabelInitialDate = new javax.swing.JLabel();
         jLabelFinalDate = new javax.swing.JLabel();
-        jTextFieldFinalDate = new javax.swing.JTextField();
+        jModifiableLabelFinalDate = new javax.swing.JLabel();
         jPanelPlatform = new javax.swing.JPanel();
         jRadioButtonPc = new javax.swing.JRadioButton();
         jLabelPcAvailability = new javax.swing.JLabel();
@@ -130,18 +130,28 @@ public class DialogRentRecord extends javax.swing.JDialog {
         jLabelInitialDate.setText("Data d'inici:");
         jPanelRentData.add(jLabelInitialDate);
 
-        jTextFieldInitialDate.setEditable(false);
-        jTextFieldInitialDate.setEnabled(false);
-        jTextFieldInitialDate.setFocusable(false);
-        jPanelRentData.add(jTextFieldInitialDate);
+        jModifiableLabelInitialDate.setBackground(new java.awt.Color(240, 240, 240));
+        jModifiableLabelInitialDate.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        jModifiableLabelInitialDate.setIcon(new javax.swing.ImageIcon(getClass().getResource("/calendarIcon.png"))); // NOI18N
+        jModifiableLabelInitialDate.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(204, 204, 204)));
+        jModifiableLabelInitialDate.setEnabled(false);
+        jModifiableLabelInitialDate.setHorizontalTextPosition(javax.swing.SwingConstants.LEFT);
+        jModifiableLabelInitialDate.setOpaque(true);
+        jModifiableLabelInitialDate.setLayout(new java.awt.BorderLayout()); jModifiableLabelInitialDate.setBorder(javax.swing.BorderFactory.createCompoundBorder(jModifiableLabelInitialDate.getBorder(), javax.swing.BorderFactory.createEmptyBorder(0, 6, 0, 0))); jModifiableLabelInitialDate.add(new javax.swing.JLabel(jModifiableLabelInitialDate.getDisabledIcon()) {{ setBorder(javax.swing.BorderFactory.createEmptyBorder(0, 0, 0, 5)); }}, java.awt.BorderLayout.EAST); jModifiableLabelInitialDate.setIcon(null);
+        jPanelRentData.add(jModifiableLabelInitialDate);
 
         jLabelFinalDate.setText("Data de tornada:");
         jPanelRentData.add(jLabelFinalDate);
 
-        jTextFieldFinalDate.setEditable(false);
-        jTextFieldFinalDate.setEnabled(false);
-        jTextFieldFinalDate.setFocusable(false);
-        jPanelRentData.add(jTextFieldFinalDate);
+        jModifiableLabelFinalDate.setBackground(new java.awt.Color(240, 240, 240));
+        jModifiableLabelFinalDate.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        jModifiableLabelFinalDate.setIcon(new javax.swing.ImageIcon(getClass().getResource("/calendarIcon.png"))); // NOI18N
+        jModifiableLabelFinalDate.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(204, 204, 204)));
+        jModifiableLabelFinalDate.setEnabled(false);
+        jModifiableLabelFinalDate.setHorizontalTextPosition(javax.swing.SwingConstants.LEFT);
+        jModifiableLabelFinalDate.setOpaque(true);
+        jModifiableLabelFinalDate.setLayout(new java.awt.BorderLayout()); jModifiableLabelFinalDate.setBorder(javax.swing.BorderFactory.createCompoundBorder(jModifiableLabelFinalDate.getBorder(), javax.swing.BorderFactory.createEmptyBorder(0, 6, 0, 0))); jModifiableLabelFinalDate.add(new javax.swing.JLabel(jModifiableLabelFinalDate.getDisabledIcon()) {{ setBorder(javax.swing.BorderFactory.createEmptyBorder(0, 0, 0, 5)); }}, java.awt.BorderLayout.EAST); jModifiableLabelFinalDate.setIcon(null);
+        jPanelRentData.add(jModifiableLabelFinalDate);
 
         jPanelPlatform.setBorder(javax.swing.BorderFactory.createTitledBorder("Plataforma"));
         jPanelPlatform.setLayout(new java.awt.GridLayout(4, 2));
@@ -217,10 +227,12 @@ public class DialogRentRecord extends javax.swing.JDialog {
         jButtonRentConfirm.setBackground(new java.awt.Color(0, 153, 51));
         jButtonRentConfirm.setFont(new java.awt.Font("Adwaita Sans", 1, 15)); // NOI18N
         jButtonRentConfirm.setForeground(new java.awt.Color(255, 255, 255));
+        jButtonRentConfirm.setIcon(new javax.swing.ImageIcon(getClass().getResource("/confirmIcon.png"))); // NOI18N
         jButtonRentConfirm.setText("Confirmar");
         jButtonRentConfirm.addActionListener(this::jButtonRentConfirmActionPerformed);
 
         jButtonRentCancel.setBackground(java.awt.Color.lightGray);
+        jButtonRentCancel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/closeIcon.png"))); // NOI18N
         jButtonRentCancel.setText("Cancel·lar");
         jButtonRentCancel.addActionListener(this::jButtonRentCancelActionPerformed);
 
@@ -347,6 +359,8 @@ public class DialogRentRecord extends javax.swing.JDialog {
     private javax.swing.JLabel jLabelUser;
     private javax.swing.JLabel jLabelXbox;
     private javax.swing.JLabel jLabelXboxAvailability;
+    private javax.swing.JLabel jModifiableLabelFinalDate;
+    private javax.swing.JLabel jModifiableLabelInitialDate;
     private javax.swing.JPanel jPanelGameDetails;
     private javax.swing.JPanel jPanelNRecord;
     private javax.swing.JPanel jPanelPlatform;
@@ -355,8 +369,6 @@ public class DialogRentRecord extends javax.swing.JDialog {
     private javax.swing.JRadioButton jRadioButtonPs5;
     private javax.swing.JRadioButton jRadioButtonSwitch2;
     private javax.swing.JRadioButton jRadioButtonXbox;
-    private javax.swing.JTextField jTextFieldFinalDate;
-    private javax.swing.JTextField jTextFieldInitialDate;
     private javax.swing.JTextField jTextFieldNRecord;
     // End of variables declaration//GEN-END:variables
 
@@ -369,8 +381,8 @@ public class DialogRentRecord extends javax.swing.JDialog {
         jRadioButtonSwitch2.setEnabled(false);
         
         jTextFieldNRecord.setText(String.valueOf(Rent.getRentId()));
-        jTextFieldInitialDate.setText(StringFormater.dateToString(LocalDate.now()));
-        jTextFieldFinalDate.setText(StringFormater.dateToString(Rent.getCalculatedFinalDate()));
+        jModifiableLabelInitialDate.setText(StringFormater.dateToString(LocalDate.now()));
+        jModifiableLabelFinalDate.setText(StringFormater.dateToString(Rent.getCalculatedFinalDate()));
         
         for (User user : BusinessLogic.getUserList()) {
             jComboBoxUsers.addItem(user.getNameFirstSurname() + " - " + user.getDni());

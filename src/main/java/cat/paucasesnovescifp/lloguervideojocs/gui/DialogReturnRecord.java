@@ -111,10 +111,12 @@ public class DialogReturnRecord extends javax.swing.JDialog {
         jButtonCompleteRent.setBackground(new java.awt.Color(0, 153, 51));
         jButtonCompleteRent.setFont(new java.awt.Font("Adwaita Sans", 1, 15)); // NOI18N
         jButtonCompleteRent.setForeground(new java.awt.Color(255, 255, 255));
+        jButtonCompleteRent.setIcon(new javax.swing.ImageIcon(getClass().getResource("/returnIcon.png"))); // NOI18N
         jButtonCompleteRent.setText("Marcar com a retornat");
         jButtonCompleteRent.addActionListener(this::jButtonCompleteRentActionPerformed);
 
         jButtonClose.setBackground(java.awt.Color.lightGray);
+        jButtonClose.setIcon(new javax.swing.ImageIcon(getClass().getResource("/closeIcon.png"))); // NOI18N
         jButtonClose.setText("Tancar");
         jButtonClose.addActionListener(this::jButtonCloseActionPerformed);
 
@@ -143,14 +145,10 @@ public class DialogReturnRecord extends javax.swing.JDialog {
             .addGroup(jPanelDetailsLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jPanelRentDetails, javax.swing.GroupLayout.PREFERRED_SIZE, 270, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 181, Short.MAX_VALUE)
                 .addGroup(jPanelDetailsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanelDetailsLayout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jButtonClose, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelDetailsLayout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 199, Short.MAX_VALUE)
-                        .addComponent(jButtonCompleteRent, javax.swing.GroupLayout.PREFERRED_SIZE, 210, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 0, Short.MAX_VALUE)))
+                    .addComponent(jButtonClose, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jButtonCompleteRent, javax.swing.GroupLayout.Alignment.TRAILING))
                 .addGap(16, 16, 16))
         );
         jPanelDetailsLayout.setVerticalGroup(
@@ -160,9 +158,9 @@ public class DialogReturnRecord extends javax.swing.JDialog {
                 .addComponent(jPanelRentDetails, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addContainerGap())
             .addGroup(jPanelDetailsLayout.createSequentialGroup()
-                .addGap(15, 15, 15)
+                .addGap(14, 14, 14)
                 .addComponent(jButtonCompleteRent, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 30, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 31, Short.MAX_VALUE)
                 .addComponent(jButtonClose, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(15, 15, 15))
         );

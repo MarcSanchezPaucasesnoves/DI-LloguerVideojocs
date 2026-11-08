@@ -4,6 +4,14 @@
  */
 package cat.paucasesnovescifp.lloguervideojocs.gui;
 
+import cat.paucasesnovescifp.lloguervideojocs.dto.DtoException;
+import cat.paucasesnovescifp.lloguervideojocs.dto.Game;
+import cat.paucasesnovescifp.lloguervideojocs.logic.BusinessException;
+import cat.paucasesnovescifp.lloguervideojocs.logic.BusinessLogic;
+import cat.paucasesnovescifp.lloguervideojocs.util.TableUtils;
+import java.util.ArrayList;
+import javax.swing.table.DefaultTableModel;
+
 /**
  *
  * @author marc
@@ -11,6 +19,10 @@ package cat.paucasesnovescifp.lloguervideojocs.gui;
 public class DialogRemoveGame extends javax.swing.JDialog {
     
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(DialogRemoveGame.class.getName());
+    
+    private DefaultTableModel model;
+    
+    private ArrayList<String> currentValueFieldsSelected;
 
     /**
      * Creates new form DialogReturnRecord
@@ -18,6 +30,15 @@ public class DialogRemoveGame extends javax.swing.JDialog {
     public DialogRemoveGame(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
+        
+        validateConfirmButton();
+        
+        suscribeRowTableListener();
+        
+        model = (DefaultTableModel) jTableRemoveGame.getModel();
+        
+        TableUtils.setSorterTable(jTableRemoveGame);
+        refreshRemoveGameTable();
     }
 
     /**
@@ -30,7 +51,7 @@ public class DialogRemoveGame extends javax.swing.JDialog {
     private void initComponents() {
 
         jScrollPaneReturnRecord = new javax.swing.JScrollPane();
-        jTableReturnRecord = new javax.swing.JTable();
+        jTableRemoveGame = new javax.swing.JTable();
         jPanelDetails = new javax.swing.JPanel();
         jButtonRemoveGame = new javax.swing.JButton();
         jButtonClose = new javax.swing.JButton();
@@ -38,14 +59,15 @@ public class DialogRemoveGame extends javax.swing.JDialog {
         jLabelName = new javax.swing.JLabel();
         jLabelGameName = new javax.swing.JLabel();
         jLabelGenre = new javax.swing.JLabel();
-        jLabelGemGenre = new javax.swing.JLabel();
+        jLabelGameGenre = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Eliminar joc");
         setIconImage(new javax.swing.ImageIcon(getClass().getResource("/gameControllerIcon.png")).getImage());
         setResizable(false);
 
-        jTableReturnRecord.setModel(new javax.swing.table.DefaultTableModel(
+        jTableRemoveGame.setAutoCreateRowSorter(true);
+        jTableRemoveGame.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
@@ -68,19 +90,24 @@ public class DialogRemoveGame extends javax.swing.JDialog {
                 return canEdit [columnIndex];
             }
         });
-        jTableReturnRecord.getTableHeader().setReorderingAllowed(false);
-        jScrollPaneReturnRecord.setViewportView(jTableReturnRecord);
+        jTableRemoveGame.setRowHeight(60);
+        jTableRemoveGame.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
+        jTableRemoveGame.getTableHeader().setReorderingAllowed(false);
+        jScrollPaneReturnRecord.setViewportView(jTableRemoveGame);
 
         jPanelDetails.setBorder(javax.swing.BorderFactory.createTitledBorder(""));
 
         jButtonRemoveGame.setBackground(new java.awt.Color(153, 0, 0));
         jButtonRemoveGame.setFont(new java.awt.Font("Adwaita Sans", 1, 15)); // NOI18N
         jButtonRemoveGame.setForeground(new java.awt.Color(255, 255, 255));
+        jButtonRemoveGame.setIcon(new javax.swing.ImageIcon(getClass().getResource("/confirmIcon.png"))); // NOI18N
         jButtonRemoveGame.setText("Eliminar joc");
         jButtonRemoveGame.addActionListener(this::jButtonRemoveGameActionPerformed);
 
         jButtonClose.setBackground(java.awt.Color.lightGray);
+        jButtonClose.setIcon(new javax.swing.ImageIcon(getClass().getResource("/closeIcon.png"))); // NOI18N
         jButtonClose.setText("Tancar");
+        jButtonClose.addActionListener(this::jButtonCloseActionPerformed);
 
         jPanelRentDetails.setLayout(new java.awt.GridLayout(2, 2));
 
@@ -90,7 +117,7 @@ public class DialogRemoveGame extends javax.swing.JDialog {
 
         jLabelGenre.setText("Gènere:");
         jPanelRentDetails.add(jLabelGenre);
-        jPanelRentDetails.add(jLabelGemGenre);
+        jPanelRentDetails.add(jLabelGameGenre);
 
         javax.swing.GroupLayout jPanelDetailsLayout = new javax.swing.GroupLayout(jPanelDetails);
         jPanelDetails.setLayout(jPanelDetailsLayout);
@@ -148,8 +175,23 @@ public class DialogRemoveGame extends javax.swing.JDialog {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButtonRemoveGameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonRemoveGameActionPerformed
-        // TODO add your handling code here:
+        String nameGame = currentValueFieldsSelected.get(0);
+        
+        
+        try {
+            Game game = BusinessLogic.getGame(nameGame);
+            BusinessLogic.removeGame(game);
+                    
+            javax.swing.JOptionPane.showMessageDialog(this, "Joc eliminat correctament", "Informació de l'operació", javax.swing.JOptionPane.INFORMATION_MESSAGE);
+            dispose();
+        } catch (DtoException | BusinessException e) {
+            javax.swing.JOptionPane.showMessageDialog(this, e.getMessage(), "Joc no eliminat", javax.swing.JOptionPane.ERROR_MESSAGE);
+        }
     }//GEN-LAST:event_jButtonRemoveGameActionPerformed
+
+    private void jButtonCloseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonCloseActionPerformed
+        dispose();
+    }//GEN-LAST:event_jButtonCloseActionPerformed
 
     /**
      * @param args the command line arguments
@@ -158,13 +200,52 @@ public class DialogRemoveGame extends javax.swing.JDialog {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButtonClose;
     private javax.swing.JButton jButtonRemoveGame;
+    private javax.swing.JLabel jLabelGameGenre;
     private javax.swing.JLabel jLabelGameName;
-    private javax.swing.JLabel jLabelGemGenre;
     private javax.swing.JLabel jLabelGenre;
     private javax.swing.JLabel jLabelName;
     private javax.swing.JPanel jPanelDetails;
     private javax.swing.JPanel jPanelRentDetails;
     private javax.swing.JScrollPane jScrollPaneReturnRecord;
-    private javax.swing.JTable jTableReturnRecord;
+    private javax.swing.JTable jTableRemoveGame;
     // End of variables declaration//GEN-END:variables
+
+    private void refreshRemoveGameTable() {
+        model.setRowCount(0);
+        
+        ArrayList<Game> gameList = BusinessLogic.getGameList();
+        
+        
+        for (Game game : gameList) {
+            model.addRow(
+                new Object[] {
+                    game.getName(),
+                    game.getGenre().getFormatedName()
+                }
+            );
+        }        
+    }
+    
+    private void suscribeRowTableListener() {
+        jTableRemoveGame.getSelectionModel().addListSelectionListener(new javax.swing.event.ListSelectionListener() {
+            @Override
+            public void valueChanged(javax.swing.event.ListSelectionEvent evt) {
+                currentValueFieldsSelected = TableUtils.getFieldsSelected(evt, jTableRemoveGame);
+                refreshUserDetails();
+                validateConfirmButton();
+            }
+        });
+    }
+    
+    
+    private void refreshUserDetails() {
+        jLabelGameName.setText(currentValueFieldsSelected.get(0));
+        jLabelGameGenre.setText(currentValueFieldsSelected.get(1));
+    }
+    
+    private void validateConfirmButton() {
+        jButtonRemoveGame.setEnabled(
+            jTableRemoveGame.getSelectedRow() != -1
+        );
+    }
 }

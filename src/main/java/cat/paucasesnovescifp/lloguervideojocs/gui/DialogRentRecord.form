@@ -60,7 +60,7 @@
                   </Group>
                   <Component id="jPanelRentData" min="-2" pref="426" max="-2" attributes="0"/>
               </Group>
-              <EmptySpace type="separate" min="-2" max="-2" attributes="0"/>
+              <EmptySpace type="separate" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
                   <Component id="jButtonRentConfirm" alignment="3" min="-2" pref="40" max="-2" attributes="0"/>
                   <Component id="jButtonRentCancel" alignment="3" min="-2" pref="40" max="-2" attributes="0"/>
@@ -150,24 +150,58 @@
             <Property name="text" type="java.lang.String" value="Data d&apos;inici:"/>
           </Properties>
         </Component>
-        <Component class="javax.swing.JTextField" name="jTextFieldInitialDate">
+        <Component class="javax.swing.JLabel" name="jModifiableLabelInitialDate">
           <Properties>
-            <Property name="editable" type="boolean" value="false"/>
+            <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+              <Color blue="f0" green="f0" red="f0" type="rgb"/>
+            </Property>
+            <Property name="horizontalAlignment" type="int" value="2"/>
+            <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+              <Image iconType="3" name="/calendarIcon.png"/>
+            </Property>
+            <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
+              <Border info="org.netbeans.modules.form.compat2.border.LineBorderInfo">
+                <LineBorder>
+                  <Color PropertyName="color" blue="cc" green="cc" red="cc" type="rgb"/>
+                </LineBorder>
+              </Border>
+            </Property>
             <Property name="enabled" type="boolean" value="false"/>
-            <Property name="focusable" type="boolean" value="false"/>
+            <Property name="horizontalTextPosition" type="int" value="2"/>
+            <Property name="opaque" type="boolean" value="true"/>
           </Properties>
+          <AuxValues>
+            <AuxValue name="JavaCodeGenerator_InitCodePost" type="java.lang.String" value="jModifiableLabelInitialDate.setLayout(new java.awt.BorderLayout()); jModifiableLabelInitialDate.setBorder(javax.swing.BorderFactory.createCompoundBorder(jModifiableLabelInitialDate.getBorder(), javax.swing.BorderFactory.createEmptyBorder(0, 6, 0, 0))); jModifiableLabelInitialDate.add(new javax.swing.JLabel(jModifiableLabelInitialDate.getDisabledIcon()) {{ setBorder(javax.swing.BorderFactory.createEmptyBorder(0, 0, 0, 5)); }}, java.awt.BorderLayout.EAST); jModifiableLabelInitialDate.setIcon(null);"/>
+          </AuxValues>
         </Component>
         <Component class="javax.swing.JLabel" name="jLabelFinalDate">
           <Properties>
             <Property name="text" type="java.lang.String" value="Data de tornada:"/>
           </Properties>
         </Component>
-        <Component class="javax.swing.JTextField" name="jTextFieldFinalDate">
+        <Component class="javax.swing.JLabel" name="jModifiableLabelFinalDate">
           <Properties>
-            <Property name="editable" type="boolean" value="false"/>
+            <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+              <Color blue="f0" green="f0" red="f0" type="rgb"/>
+            </Property>
+            <Property name="horizontalAlignment" type="int" value="2"/>
+            <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+              <Image iconType="3" name="/calendarIcon.png"/>
+            </Property>
+            <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
+              <Border info="org.netbeans.modules.form.compat2.border.LineBorderInfo">
+                <LineBorder>
+                  <Color PropertyName="color" blue="cc" green="cc" red="cc" type="rgb"/>
+                </LineBorder>
+              </Border>
+            </Property>
             <Property name="enabled" type="boolean" value="false"/>
-            <Property name="focusable" type="boolean" value="false"/>
+            <Property name="horizontalTextPosition" type="int" value="2"/>
+            <Property name="opaque" type="boolean" value="true"/>
           </Properties>
+          <AuxValues>
+            <AuxValue name="JavaCodeGenerator_InitCodePost" type="java.lang.String" value="jModifiableLabelFinalDate.setLayout(new java.awt.BorderLayout()); jModifiableLabelFinalDate.setBorder(javax.swing.BorderFactory.createCompoundBorder(jModifiableLabelFinalDate.getBorder(), javax.swing.BorderFactory.createEmptyBorder(0, 6, 0, 0))); jModifiableLabelFinalDate.add(new javax.swing.JLabel(jModifiableLabelFinalDate.getDisabledIcon()) {{ setBorder(javax.swing.BorderFactory.createEmptyBorder(0, 0, 0, 5)); }}, java.awt.BorderLayout.EAST); jModifiableLabelFinalDate.setIcon(null);"/>
+          </AuxValues>
         </Component>
       </SubComponents>
     </Container>
@@ -386,6 +420,9 @@
         <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
           <Color blue="ff" green="ff" red="ff" type="rgb"/>
         </Property>
+        <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+          <Image iconType="3" name="/confirmIcon.png"/>
+        </Property>
         <Property name="text" type="java.lang.String" value="Confirmar"/>
       </Properties>
       <Events>
@@ -396,6 +433,9 @@
       <Properties>
         <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
           <Color blue="c0" green="c0" id="lightGray" palette="1" red="c0" type="palette"/>
+        </Property>
+        <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+          <Image iconType="3" name="/closeIcon.png"/>
         </Property>
         <Property name="text" type="java.lang.String" value="Cancel&#xb7;lar"/>
       </Properties>

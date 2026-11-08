@@ -34,7 +34,7 @@ public class DialogAddUser extends javax.swing.JDialog {
         
         fieldsValidation();
         
-        jTextEntryDate.setText(StringFormater.dateToString(LocalDate.now()));
+        jModifiableLabelEntryDate.setText(StringFormater.dateToString(LocalDate.now()));
     }
 
     /**
@@ -58,7 +58,7 @@ public class DialogAddUser extends javax.swing.JDialog {
         jLabelPhoneNumber = new javax.swing.JLabel();
         jTextFieldPhoneNumber = new javax.swing.JTextField();
         jLabelEntryDate = new javax.swing.JLabel();
-        jTextEntryDate = new javax.swing.JTextField();
+        jModifiableLabelEntryDate = new javax.swing.JLabel();
         jButtonUserAddConfirm = new javax.swing.JButton();
         jButtonUserAddCancel = new javax.swing.JButton();
         validationPanel = new org.netbeans.validation.api.ui.swing.ValidationPanel();
@@ -73,35 +73,35 @@ public class DialogAddUser extends javax.swing.JDialog {
         jPanelUserData.setMaximumSize(new java.awt.Dimension(270, 200));
         jPanelUserData.setLayout(new java.awt.GridLayout(6, 2, 20, 20));
 
-        jLabelName.setText("Nom *:");
+        jLabelName.setText("<html>Nom <font color='red'>*</font>:</html>");
         jPanelUserData.add(jLabelName);
 
         jTextFieldName.setName("Nom"); // NOI18N
         jTextFieldName.addActionListener(this::jTextFieldNameActionPerformed);
         jPanelUserData.add(jTextFieldName);
 
-        jLabelFirstSurname.setText("Llinatge 1 *:");
+        jLabelFirstSurname.setText("<html>Llinatge 1 <font color='red'>*</font>:</html>");
         jPanelUserData.add(jLabelFirstSurname);
 
         jTextFieldFirstSurname.setName("Llinatge 1"); // NOI18N
         jTextFieldFirstSurname.addActionListener(this::jTextFieldFirstSurnameActionPerformed);
         jPanelUserData.add(jTextFieldFirstSurname);
 
-        jLabelSecondSurname.setText("Llinatge 2 *:");
+        jLabelSecondSurname.setText("<html>Llinatge 2 <font color='red'>*</font>:</html>");
         jPanelUserData.add(jLabelSecondSurname);
 
         jTextFieldSecondSurname.setName("Llinatge 2"); // NOI18N
         jTextFieldSecondSurname.addActionListener(this::jTextFieldSecondSurnameActionPerformed);
         jPanelUserData.add(jTextFieldSecondSurname);
 
-        jLabelDni.setText("DNI *:");
+        jLabelDni.setText("<html>DNI <font color='red'>*</font>:</html>");
         jPanelUserData.add(jLabelDni);
 
         jTextFieldDni.setName("Dni"); // NOI18N
         jTextFieldDni.addActionListener(this::jTextFieldDniActionPerformed);
         jPanelUserData.add(jTextFieldDni);
 
-        jLabelPhoneNumber.setText("Telèfon *:");
+        jLabelPhoneNumber.setText("<html>Telèfon <font color='red'>*</font>:</html>");
         jPanelUserData.add(jLabelPhoneNumber);
 
         jTextFieldPhoneNumber.setName("Telèfon"); // NOI18N
@@ -111,18 +111,25 @@ public class DialogAddUser extends javax.swing.JDialog {
         jLabelEntryDate.setText("Data de registre:");
         jPanelUserData.add(jLabelEntryDate);
 
-        jTextEntryDate.setEditable(false);
-        jTextEntryDate.setEnabled(false);
-        jTextEntryDate.setFocusable(false);
-        jPanelUserData.add(jTextEntryDate);
+        jModifiableLabelEntryDate.setBackground(new java.awt.Color(240, 240, 240));
+        jModifiableLabelEntryDate.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        jModifiableLabelEntryDate.setIcon(new javax.swing.ImageIcon(getClass().getResource("/calendarIcon.png"))); // NOI18N
+        jModifiableLabelEntryDate.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(204, 204, 204)));
+        jModifiableLabelEntryDate.setEnabled(false);
+        jModifiableLabelEntryDate.setHorizontalTextPosition(javax.swing.SwingConstants.LEFT);
+        jModifiableLabelEntryDate.setOpaque(true);
+        jModifiableLabelEntryDate.setLayout(new java.awt.BorderLayout()); jModifiableLabelEntryDate.setBorder(javax.swing.BorderFactory.createCompoundBorder(jModifiableLabelEntryDate.getBorder(), javax.swing.BorderFactory.createEmptyBorder(0, 6, 0, 0))); jModifiableLabelEntryDate.add(new javax.swing.JLabel(jModifiableLabelEntryDate.getDisabledIcon()) {{ setBorder(javax.swing.BorderFactory.createEmptyBorder(0, 0, 0, 5)); }}, java.awt.BorderLayout.EAST); jModifiableLabelEntryDate.setIcon(null);
+        jPanelUserData.add(jModifiableLabelEntryDate);
 
         jButtonUserAddConfirm.setBackground(new java.awt.Color(0, 153, 51));
         jButtonUserAddConfirm.setFont(new java.awt.Font("Adwaita Sans", 1, 15)); // NOI18N
         jButtonUserAddConfirm.setForeground(new java.awt.Color(255, 255, 255));
+        jButtonUserAddConfirm.setIcon(new javax.swing.ImageIcon(getClass().getResource("/confirmIcon.png"))); // NOI18N
         jButtonUserAddConfirm.setText("Confirmar");
         jButtonUserAddConfirm.addActionListener(this::jButtonUserAddConfirmActionPerformed);
 
         jButtonUserAddCancel.setBackground(java.awt.Color.lightGray);
+        jButtonUserAddCancel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/closeIcon.png"))); // NOI18N
         jButtonUserAddCancel.setText("Cancel·lar");
         jButtonUserAddCancel.addActionListener(this::jButtonUserAddCancelActionPerformed);
 
@@ -215,8 +222,8 @@ public class DialogAddUser extends javax.swing.JDialog {
     private javax.swing.JLabel jLabelName;
     private javax.swing.JLabel jLabelPhoneNumber;
     private javax.swing.JLabel jLabelSecondSurname;
+    private javax.swing.JLabel jModifiableLabelEntryDate;
     private javax.swing.JPanel jPanelUserData;
-    private javax.swing.JTextField jTextEntryDate;
     private javax.swing.JTextField jTextFieldDni;
     private javax.swing.JTextField jTextFieldFirstSurname;
     private javax.swing.JTextField jTextFieldName;

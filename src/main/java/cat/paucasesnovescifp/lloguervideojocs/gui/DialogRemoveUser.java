@@ -108,11 +108,14 @@ public class DialogRemoveUser extends javax.swing.JDialog {
         jButtonRemoveUser.setBackground(new java.awt.Color(153, 0, 0));
         jButtonRemoveUser.setFont(new java.awt.Font("Adwaita Sans", 1, 15)); // NOI18N
         jButtonRemoveUser.setForeground(new java.awt.Color(255, 255, 255));
+        jButtonRemoveUser.setIcon(new javax.swing.ImageIcon(getClass().getResource("/confirmIcon.png"))); // NOI18N
         jButtonRemoveUser.setText("Eliminar usuari");
         jButtonRemoveUser.addActionListener(this::jButtonRemoveUserActionPerformed);
 
         jButtonClose.setBackground(java.awt.Color.lightGray);
+        jButtonClose.setIcon(new javax.swing.ImageIcon(getClass().getResource("/closeIcon.png"))); // NOI18N
         jButtonClose.setText("Tancar");
+        jButtonClose.addActionListener(this::jButtonCloseActionPerformed);
 
         jPanelRentDetails.setLayout(new java.awt.GridLayout(6, 2));
 
@@ -205,6 +208,10 @@ public class DialogRemoveUser extends javax.swing.JDialog {
             javax.swing.JOptionPane.showMessageDialog(this, e.getMessage(), "Usuari no eliminat", javax.swing.JOptionPane.ERROR_MESSAGE);
         }
     }//GEN-LAST:event_jButtonRemoveUserActionPerformed
+
+    private void jButtonCloseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonCloseActionPerformed
+        dispose();
+    }//GEN-LAST:event_jButtonCloseActionPerformed
 
     /**
      * @param args the command line arguments

@@ -114,6 +114,7 @@ public class MainScreen extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
+        jTableVideogameRental.setEnabled(false);
         jTableVideogameRental.setRowHeight(60);
         jTableVideogameRental.setRowSelectionAllowed(false);
         jTableVideogameRental.getTableHeader().setReorderingAllowed(false);

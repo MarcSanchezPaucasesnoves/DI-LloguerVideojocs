@@ -85,7 +85,7 @@
       <SubComponents>
         <Component class="javax.swing.JLabel" name="jLabelName">
           <Properties>
-            <Property name="text" type="java.lang.String" value="Nom *:"/>
+            <Property name="text" type="java.lang.String" value="&lt;html&gt;Nom &lt;font color=&apos;red&apos;&gt;*&lt;/font&gt;:&lt;/html&gt;"/>
           </Properties>
         </Component>
         <Component class="javax.swing.JTextField" name="jTextFieldName">
@@ -98,7 +98,7 @@
         </Component>
         <Component class="javax.swing.JLabel" name="jLabelFirstSurname">
           <Properties>
-            <Property name="text" type="java.lang.String" value="Llinatge 1 *:"/>
+            <Property name="text" type="java.lang.String" value="&lt;html&gt;Llinatge 1 &lt;font color=&apos;red&apos;&gt;*&lt;/font&gt;:&lt;/html&gt;"/>
           </Properties>
         </Component>
         <Component class="javax.swing.JTextField" name="jTextFieldFirstSurname">
@@ -111,7 +111,7 @@
         </Component>
         <Component class="javax.swing.JLabel" name="jLabelSecondSurname">
           <Properties>
-            <Property name="text" type="java.lang.String" value="Llinatge 2 *:"/>
+            <Property name="text" type="java.lang.String" value="&lt;html&gt;Llinatge 2 &lt;font color=&apos;red&apos;&gt;*&lt;/font&gt;:&lt;/html&gt;"/>
           </Properties>
         </Component>
         <Component class="javax.swing.JTextField" name="jTextFieldSecondSurname">
@@ -124,7 +124,7 @@
         </Component>
         <Component class="javax.swing.JLabel" name="jLabelDni">
           <Properties>
-            <Property name="text" type="java.lang.String" value="DNI *:"/>
+            <Property name="text" type="java.lang.String" value="&lt;html&gt;DNI &lt;font color=&apos;red&apos;&gt;*&lt;/font&gt;:&lt;/html&gt;"/>
           </Properties>
         </Component>
         <Component class="javax.swing.JTextField" name="jTextFieldDni">
@@ -137,7 +137,7 @@
         </Component>
         <Component class="javax.swing.JLabel" name="jLabelPhoneNumber">
           <Properties>
-            <Property name="text" type="java.lang.String" value="Tel&#xe8;fon *:"/>
+            <Property name="text" type="java.lang.String" value="&lt;html&gt;Tel&#xe8;fon &lt;font color=&apos;red&apos;&gt;*&lt;/font&gt;:&lt;/html&gt;"/>
           </Properties>
         </Component>
         <Component class="javax.swing.JTextField" name="jTextFieldPhoneNumber">
@@ -153,12 +153,29 @@
             <Property name="text" type="java.lang.String" value="Data de registre:"/>
           </Properties>
         </Component>
-        <Component class="javax.swing.JTextField" name="jTextEntryDate">
+        <Component class="javax.swing.JLabel" name="jModifiableLabelEntryDate">
           <Properties>
-            <Property name="editable" type="boolean" value="false"/>
+            <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+              <Color blue="f0" green="f0" red="f0" type="rgb"/>
+            </Property>
+            <Property name="horizontalAlignment" type="int" value="2"/>
+            <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+              <Image iconType="3" name="/calendarIcon.png"/>
+            </Property>
+            <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
+              <Border info="org.netbeans.modules.form.compat2.border.LineBorderInfo">
+                <LineBorder>
+                  <Color PropertyName="color" blue="cc" green="cc" red="cc" type="rgb"/>
+                </LineBorder>
+              </Border>
+            </Property>
             <Property name="enabled" type="boolean" value="false"/>
-            <Property name="focusable" type="boolean" value="false"/>
+            <Property name="horizontalTextPosition" type="int" value="2"/>
+            <Property name="opaque" type="boolean" value="true"/>
           </Properties>
+          <AuxValues>
+            <AuxValue name="JavaCodeGenerator_InitCodePost" type="java.lang.String" value="jModifiableLabelEntryDate.setLayout(new java.awt.BorderLayout()); jModifiableLabelEntryDate.setBorder(javax.swing.BorderFactory.createCompoundBorder(jModifiableLabelEntryDate.getBorder(), javax.swing.BorderFactory.createEmptyBorder(0, 6, 0, 0))); jModifiableLabelEntryDate.add(new javax.swing.JLabel(jModifiableLabelEntryDate.getDisabledIcon()) {{ setBorder(javax.swing.BorderFactory.createEmptyBorder(0, 0, 0, 5)); }}, java.awt.BorderLayout.EAST); jModifiableLabelEntryDate.setIcon(null);"/>
+          </AuxValues>
         </Component>
       </SubComponents>
     </Container>
@@ -173,6 +190,9 @@
         <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
           <Color blue="ff" green="ff" red="ff" type="rgb"/>
         </Property>
+        <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+          <Image iconType="3" name="/confirmIcon.png"/>
+        </Property>
         <Property name="text" type="java.lang.String" value="Confirmar"/>
       </Properties>
       <Events>
@@ -183,6 +203,9 @@
       <Properties>
         <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
           <Color blue="c0" green="c0" id="lightGray" palette="1" red="c0" type="palette"/>
+        </Property>
+        <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+          <Image iconType="3" name="/closeIcon.png"/>
         </Property>
         <Property name="text" type="java.lang.String" value="Cancel&#xb7;lar"/>
       </Properties>
