@@ -115,6 +115,7 @@ public class MainScreen extends javax.swing.JFrame {
             }
         });
         jTableVideogameRental.setRowHeight(60);
+        jTableVideogameRental.setRowSelectionAllowed(false);
         jTableVideogameRental.getTableHeader().setReorderingAllowed(false);
         jScrollPaneVideogameRental.setViewportView(jTableVideogameRental);
         if (jTableVideogameRental.getColumnModel().getColumnCount() > 0) {

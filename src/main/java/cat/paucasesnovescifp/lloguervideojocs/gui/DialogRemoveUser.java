@@ -4,6 +4,14 @@
  */
 package cat.paucasesnovescifp.lloguervideojocs.gui;
 
+import cat.paucasesnovescifp.lloguervideojocs.dto.User;
+import cat.paucasesnovescifp.lloguervideojocs.logic.BusinessException;
+import cat.paucasesnovescifp.lloguervideojocs.logic.BusinessLogic;
+import cat.paucasesnovescifp.lloguervideojocs.util.StringFormater;
+import cat.paucasesnovescifp.lloguervideojocs.util.TableUtils;
+import java.util.ArrayList;
+import javax.swing.table.DefaultTableModel;
+
 /**
  *
  * @author marc
@@ -11,6 +19,10 @@ package cat.paucasesnovescifp.lloguervideojocs.gui;
 public class DialogRemoveUser extends javax.swing.JDialog {
     
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(DialogRemoveUser.class.getName());
+    
+    private DefaultTableModel model;
+    
+    private ArrayList<String> currentValueFieldsSelected;
 
     /**
      * Creates new form DialogReturnRecord
@@ -18,6 +30,15 @@ public class DialogRemoveUser extends javax.swing.JDialog {
     public DialogRemoveUser(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
+        
+        validateConfirmButton();
+        
+        suscribeRowTableListener();
+        
+        model = (DefaultTableModel) jTableRemoveUser.getModel();
+        
+        TableUtils.setSorterTable(jTableRemoveUser);
+        refreshRemoveUserTable();
     }
 
     /**
@@ -30,7 +51,7 @@ public class DialogRemoveUser extends javax.swing.JDialog {
     private void initComponents() {
 
         jScrollPaneReturnRecord = new javax.swing.JScrollPane();
-        jTableReturnRecord = new javax.swing.JTable();
+        jTableRemoveUser = new javax.swing.JTable();
         jPanelDetails = new javax.swing.JPanel();
         jButtonRemoveUser = new javax.swing.JButton();
         jButtonClose = new javax.swing.JButton();
@@ -40,7 +61,7 @@ public class DialogRemoveUser extends javax.swing.JDialog {
         jLabelFirstSurname = new javax.swing.JLabel();
         jLabelUserFirstSurname = new javax.swing.JLabel();
         jLabelSecondSurname = new javax.swing.JLabel();
-        jLabelPlatformUserSecondSurname = new javax.swing.JLabel();
+        jLabelUserSecondSurname = new javax.swing.JLabel();
         jLabelDni = new javax.swing.JLabel();
         jLabelUserDni = new javax.swing.JLabel();
         jLabelPhoneNumber = new javax.swing.JLabel();
@@ -53,7 +74,8 @@ public class DialogRemoveUser extends javax.swing.JDialog {
         setIconImage(new javax.swing.ImageIcon(getClass().getResource("/userIcon.png")).getImage());
         setResizable(false);
 
-        jTableReturnRecord.setModel(new javax.swing.table.DefaultTableModel(
+        jTableRemoveUser.setAutoCreateRowSorter(true);
+        jTableRemoveUser.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
@@ -76,8 +98,10 @@ public class DialogRemoveUser extends javax.swing.JDialog {
                 return canEdit [columnIndex];
             }
         });
-        jTableReturnRecord.getTableHeader().setReorderingAllowed(false);
-        jScrollPaneReturnRecord.setViewportView(jTableReturnRecord);
+        jTableRemoveUser.setRowHeight(60);
+        jTableRemoveUser.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
+        jTableRemoveUser.getTableHeader().setReorderingAllowed(false);
+        jScrollPaneReturnRecord.setViewportView(jTableRemoveUser);
 
         jPanelDetails.setBorder(javax.swing.BorderFactory.createTitledBorder(""));
 
@@ -102,7 +126,7 @@ public class DialogRemoveUser extends javax.swing.JDialog {
 
         jLabelSecondSurname.setText("Llinatge 2:");
         jPanelRentDetails.add(jLabelSecondSurname);
-        jPanelRentDetails.add(jLabelPlatformUserSecondSurname);
+        jPanelRentDetails.add(jLabelUserSecondSurname);
 
         jLabelDni.setText("DNI:");
         jPanelRentDetails.add(jLabelDni);
@@ -168,7 +192,18 @@ public class DialogRemoveUser extends javax.swing.JDialog {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButtonRemoveUserActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonRemoveUserActionPerformed
-        // TODO add your handling code here:
+        String dni = currentValueFieldsSelected.get(3);
+        
+        
+        try {
+            User user = BusinessLogic.getUser(dni);
+            BusinessLogic.removeUser(user);
+                    
+            javax.swing.JOptionPane.showMessageDialog(this, "Usuari eliminat correctament", "Informació de l'operació", javax.swing.JOptionPane.INFORMATION_MESSAGE);
+            dispose();
+        } catch (BusinessException e) {
+            javax.swing.JOptionPane.showMessageDialog(this, e.getMessage(), "Usuari no eliminat", javax.swing.JOptionPane.ERROR_MESSAGE);
+        }
     }//GEN-LAST:event_jButtonRemoveUserActionPerformed
 
     /**
@@ -182,7 +217,6 @@ public class DialogRemoveUser extends javax.swing.JDialog {
     private javax.swing.JLabel jLabelFirstSurname;
     private javax.swing.JLabel jLabelName;
     private javax.swing.JLabel jLabelPhoneNumber;
-    private javax.swing.JLabel jLabelPlatformUserSecondSurname;
     private javax.swing.JLabel jLabelRegisterDate;
     private javax.swing.JLabel jLabelSecondSurname;
     private javax.swing.JLabel jLabelUserDni;
@@ -190,9 +224,57 @@ public class DialogRemoveUser extends javax.swing.JDialog {
     private javax.swing.JLabel jLabelUserName;
     private javax.swing.JLabel jLabelUserPhoneNumber;
     private javax.swing.JLabel jLabelUserRegisterDate;
+    private javax.swing.JLabel jLabelUserSecondSurname;
     private javax.swing.JPanel jPanelDetails;
     private javax.swing.JPanel jPanelRentDetails;
     private javax.swing.JScrollPane jScrollPaneReturnRecord;
-    private javax.swing.JTable jTableReturnRecord;
+    private javax.swing.JTable jTableRemoveUser;
     // End of variables declaration//GEN-END:variables
+
+    private void refreshRemoveUserTable() {
+        model.setRowCount(0);
+        
+        ArrayList<User> userList = BusinessLogic.getUserList();
+        
+        
+        for (User user : userList) {
+            model.addRow(
+                new Object[] {
+                    user.getNom(),
+                    user.getFirstSurname(),
+                    user.getSecondSurname(),
+                    user.getDni(),
+                    user.getPhoneNumber(),
+                    StringFormater.dateToString(user.getRegisterDate())
+                }
+            );
+        }        
+    }
+    
+    private void suscribeRowTableListener() {
+        jTableRemoveUser.getSelectionModel().addListSelectionListener(new javax.swing.event.ListSelectionListener() {
+            @Override
+            public void valueChanged(javax.swing.event.ListSelectionEvent evt) {
+                currentValueFieldsSelected = TableUtils.getFieldsSelected(evt, jTableRemoveUser);
+                refreshUserDetails();
+                validateConfirmButton();
+            }
+        });
+    }
+    
+    
+    private void refreshUserDetails() {
+        jLabelUserName.setText(currentValueFieldsSelected.get(0));
+        jLabelUserFirstSurname.setText(currentValueFieldsSelected.get(1));
+        jLabelUserSecondSurname.setText(currentValueFieldsSelected.get(2));
+        jLabelUserDni.setText(currentValueFieldsSelected.get(3));
+        jLabelUserPhoneNumber.setText(currentValueFieldsSelected.get(4));
+        jLabelUserRegisterDate.setText(currentValueFieldsSelected.get(5));
+    }
+    
+    private void validateConfirmButton() {
+        jButtonRemoveUser.setEnabled(
+            jTableRemoveUser.getSelectedRow() != -1
+        );
+    }
 }

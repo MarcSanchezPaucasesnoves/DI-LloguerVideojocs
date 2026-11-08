@@ -188,6 +188,7 @@
               </TableColumnModel>
             </Property>
             <Property name="rowHeight" type="int" value="60"/>
+            <Property name="rowSelectionAllowed" type="boolean" value="false"/>
             <Property name="tableHeader" type="javax.swing.table.JTableHeader" editor="org.netbeans.modules.form.editors2.JTableHeaderEditor">
               <TableHeader reorderingAllowed="false" resizingAllowed="true"/>
             </Property>

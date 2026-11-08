@@ -56,6 +56,17 @@ public class BusinessLogic {
     }
     
     
+    public static User getUser(String dni) throws BusinessException{
+        for (User user : userList) {
+            if (user.getDni().equals(dni)) {
+                return user;
+            }
+        }
+        
+        throw new BusinessException("No hi ha cap usuari amb aquest dni.");
+    }
+    
+    
     
     public static void addGame(Game game) throws BusinessException{
         for (Game currentGame : gameList) {
