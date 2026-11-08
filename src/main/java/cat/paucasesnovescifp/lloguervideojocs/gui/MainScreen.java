@@ -4,6 +4,22 @@
  */
 package cat.paucasesnovescifp.lloguervideojocs.gui;
 
+import cat.paucasesnovescifp.lloguervideojocs.dto.DtoException;
+import cat.paucasesnovescifp.lloguervideojocs.dto.Game;
+import cat.paucasesnovescifp.lloguervideojocs.dto.Rent;
+import cat.paucasesnovescifp.lloguervideojocs.dto.User;
+import cat.paucasesnovescifp.lloguervideojocs.logic.BusinessException;
+import cat.paucasesnovescifp.lloguervideojocs.logic.BusinessLogic;
+import cat.paucasesnovescifp.lloguervideojocs.util.TableUtils;
+import cat.paucasesnovescifp.lloguervideojocs.util.GameGenre;
+import cat.paucasesnovescifp.lloguervideojocs.util.GamePlatform;
+import cat.paucasesnovescifp.lloguervideojocs.util.StringFormater;
+import java.time.LocalDate;
+import java.time.Month;
+import java.util.ArrayList;
+import java.util.Locale;
+import javax.swing.table.DefaultTableModel;
+
 /**
  *
  * @author alumne
@@ -12,11 +28,19 @@ public class MainScreen extends javax.swing.JFrame {
     
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(MainScreen.class.getName());
 
+    
+    private DefaultTableModel model;
     /**
      * Creates new form MainScreen
      */
     public MainScreen() {
         initComponents();
+        model = (DefaultTableModel) jTableVideogameRental.getModel();
+        
+        initializeObjects();
+        refreshMainScreen();
+        
+        TableUtils.setSorterTable(jTableVideogameRental);
     }
 
     /**
@@ -28,21 +52,177 @@ public class MainScreen extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jScrollPaneVideogameRental = new javax.swing.JScrollPane();
+        jTableVideogameRental = new javax.swing.JTable() {
+            @Override
+            public java.awt.Component prepareRenderer(javax.swing.table.TableCellRenderer r, int row, int col) {
+                java.awt.Component c = super.prepareRenderer(r, row, col);
+
+                if (!isRowSelected(row)) {
+                    try {
+                        int value = Integer.parseInt(getValueAt(row, 0).toString());
+                        Rent rent = BusinessLogic.getRent(value);
+
+                        if (rent.isEnded()) {
+                            c.setBackground(new java.awt.Color(200, 255, 200));
+                        } else if (rent.isOutOfDate()) {
+                            c.setBackground(new java.awt.Color(255, 200, 200));
+                        } else {
+                            c.setBackground(java.awt.Color.WHITE);
+                        }
+
+                    } catch (Exception e) {
+                        c.setBackground(java.awt.Color.WHITE);
+                    }
+                }
+
+                return c;
+            }
+        };
+        jLabelTotalRents = new javax.swing.JLabel();
+        jLabelModifiableTotalRents = new javax.swing.JLabel();
+        jMenuBarVideogameRental = new javax.swing.JMenuBar();
+        jMenuRent = new javax.swing.JMenu();
+        jMenuItemRentRecord = new javax.swing.JMenuItem();
+        jMenuItemRentReturn = new javax.swing.JMenuItem();
+        jMenuUser = new javax.swing.JMenu();
+        jMenuItemUserAdd = new javax.swing.JMenuItem();
+        jMenuItemUserRemove = new javax.swing.JMenuItem();
+        jMenuGame = new javax.swing.JMenu();
+        jMenuItemGameAdd = new javax.swing.JMenuItem();
+        jMenuItemGameRemove = new javax.swing.JMenuItem();
+
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("Gestió de Lloguer de Videojocs");
+
+        jTableVideogameRental.setAutoCreateRowSorter(true);
+        jTableVideogameRental.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+                "Núm. registre", "Titol del joc", "Usuari que l'ha llogat", "Plataforma", "Data d'inici", "Data de tornada", "Gènere"
+            }
+        ) {
+            Class[] types = new Class [] {
+                java.lang.Integer.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
+            };
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false, false, false, false
+            };
+
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        jTableVideogameRental.setEnabled(false);
+        jTableVideogameRental.setRowHeight(60);
+        jTableVideogameRental.setRowSelectionAllowed(false);
+        jTableVideogameRental.getTableHeader().setReorderingAllowed(false);
+        jScrollPaneVideogameRental.setViewportView(jTableVideogameRental);
+        if (jTableVideogameRental.getColumnModel().getColumnCount() > 0) {
+            jTableVideogameRental.getColumnModel().getColumn(0).setCellRenderer(new javax.swing.table.DefaultTableCellRenderer() {{ setHorizontalAlignment(javax.swing.SwingConstants.LEFT); }});
+        }
+
+        jLabelTotalRents.setText("Total de lloguers: ");
+
+        jMenuRent.setText("Lloguer");
+
+        jMenuItemRentRecord.setText("Registrar...");
+        jMenuItemRentRecord.addActionListener(this::jMenuItemRentRecordActionPerformed);
+        jMenuRent.add(jMenuItemRentRecord);
+
+        jMenuItemRentReturn.setText("Tornar...");
+        jMenuItemRentReturn.addActionListener(this::jMenuItemRentReturnActionPerformed);
+        jMenuRent.add(jMenuItemRentReturn);
+
+        jMenuBarVideogameRental.add(jMenuRent);
+
+        jMenuUser.setText("Usuari");
+
+        jMenuItemUserAdd.setText("Crear...");
+        jMenuItemUserAdd.addActionListener(this::jMenuItemUserAddActionPerformed);
+        jMenuUser.add(jMenuItemUserAdd);
+
+        jMenuItemUserRemove.setText("Borrar...");
+        jMenuItemUserRemove.addActionListener(this::jMenuItemUserRemoveActionPerformed);
+        jMenuUser.add(jMenuItemUserRemove);
+
+        jMenuBarVideogameRental.add(jMenuUser);
+
+        jMenuGame.setText("Joc");
+
+        jMenuItemGameAdd.setText("Crear...");
+        jMenuItemGameAdd.addActionListener(this::jMenuItemGameAddActionPerformed);
+        jMenuGame.add(jMenuItemGameAdd);
+
+        jMenuItemGameRemove.setText("Borrar...");
+        jMenuItemGameRemove.addActionListener(this::jMenuItemGameRemoveActionPerformed);
+        jMenuGame.add(jMenuItemGameRemove);
+
+        jMenuBarVideogameRental.add(jMenuGame);
+
+        setJMenuBar(jMenuBarVideogameRental);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 400, Short.MAX_VALUE)
+            .addComponent(jScrollPaneVideogameRental, javax.swing.GroupLayout.Alignment.TRAILING)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabelTotalRents)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabelModifiableTotalRents)
+                .addGap(0, 0, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 300, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(jScrollPaneVideogameRental, javax.swing.GroupLayout.DEFAULT_SIZE, 379, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabelTotalRents)
+                    .addComponent(jLabelModifiableTotalRents))
+                .addGap(17, 17, 17))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void jMenuItemRentRecordActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemRentRecordActionPerformed
+        DialogRentRecord dialogRentRecord = new DialogRentRecord(this, true);
+        dialogRentRecord.setVisible(true);
+    }//GEN-LAST:event_jMenuItemRentRecordActionPerformed
+
+    private void jMenuItemRentReturnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemRentReturnActionPerformed
+        DialogReturnRecord dialogReturnRecord = new DialogReturnRecord(this, true);
+        dialogReturnRecord.setVisible(true);
+    }//GEN-LAST:event_jMenuItemRentReturnActionPerformed
+
+    private void jMenuItemUserAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemUserAddActionPerformed
+        DialogAddUser dialogAddUser = new DialogAddUser(this, true);
+        dialogAddUser.setVisible(true);
+    }//GEN-LAST:event_jMenuItemUserAddActionPerformed
+
+    private void jMenuItemUserRemoveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemUserRemoveActionPerformed
+        DialogRemoveUser dialogRemoveUser = new DialogRemoveUser(this, true);
+        dialogRemoveUser.setVisible(true);
+    }//GEN-LAST:event_jMenuItemUserRemoveActionPerformed
+
+    private void jMenuItemGameAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemGameAddActionPerformed
+        DialogAddGame dialogAddGame = new DialogAddGame(this, true);
+        dialogAddGame.setVisible(true);
+    }//GEN-LAST:event_jMenuItemGameAddActionPerformed
+
+    private void jMenuItemGameRemoveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemGameRemoveActionPerformed
+        DialogRemoveGame dialogRemoveGame = new DialogRemoveGame(this, true);
+        dialogRemoveGame.setVisible(true);
+    }//GEN-LAST:event_jMenuItemGameRemoveActionPerformed
 
     /**
      * @param args the command line arguments
@@ -66,9 +246,78 @@ public class MainScreen extends javax.swing.JFrame {
         //</editor-fold>
 
         /* Create and display the form */
-        java.awt.EventQueue.invokeLater(() -> new MainScreen().setVisible(true));
+        java.awt.EventQueue.invokeLater(new Runnable() {
+            @Override
+            public void run() {
+                Locale.setDefault(Locale.of("ca", "ES"));
+                
+                new MainScreen().setVisible(true);
+            }
+        });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel jLabelModifiableTotalRents;
+    private javax.swing.JLabel jLabelTotalRents;
+    private javax.swing.JMenuBar jMenuBarVideogameRental;
+    private javax.swing.JMenu jMenuGame;
+    private javax.swing.JMenuItem jMenuItemGameAdd;
+    private javax.swing.JMenuItem jMenuItemGameRemove;
+    private javax.swing.JMenuItem jMenuItemRentRecord;
+    private javax.swing.JMenuItem jMenuItemRentReturn;
+    private javax.swing.JMenuItem jMenuItemUserAdd;
+    private javax.swing.JMenuItem jMenuItemUserRemove;
+    private javax.swing.JMenu jMenuRent;
+    private javax.swing.JMenu jMenuUser;
+    private javax.swing.JScrollPane jScrollPaneVideogameRental;
+    private javax.swing.JTable jTableVideogameRental;
     // End of variables declaration//GEN-END:variables
+
+    public void refreshMainScreen(){
+        model.setRowCount(0);
+        jLabelModifiableTotalRents.setText("0");
+        
+        ArrayList<Rent> rentList = BusinessLogic.getRentList();
+        int nRents = 0;
+        
+        for (Rent rent : rentList) {
+            nRents++;
+            
+            model.addRow(
+                new Object[] {
+                    rent.getRegisterNumber(),
+                    rent.getGameName(),
+                    rent.getUser().getNameFirstSurname(),
+                    rent.getPlatform().toString(),
+                    StringFormater.dateToString(rent.getInitialDate()),
+                    StringFormater.dateToString(rent.getFinalDate()),
+                    rent.getGenre().toString()
+                }
+            );
+        }
+        jLabelModifiableTotalRents.setText(String.valueOf(nRents));
+    }
+    
+    
+    private void initializeObjects() {
+        try {
+            User user1 = new User("Marc", "Sánchez", "Alonso", "00000000A", "000000000");
+            BusinessLogic.addUser(user1);
+            User user2 = new User("Pau", "Ferrer", "Tous", "11111111A", "111111111");
+            BusinessLogic.addUser(user2);
+            
+            Game game1 = new Game("Ark Survival Evolved", GameGenre.SURVIVAL, 0, 1, 0, 2);
+            BusinessLogic.addGame(game1);
+            Game game2 = new Game("Forza Horizon 4", GameGenre.PLATFORMER, 2, 0, 1, 0);
+            BusinessLogic.addGame(game2);
+            
+            Rent rent1 = new Rent(user1, BusinessLogic.rentGameCopy(game1, GamePlatform.SWITCH2));
+            BusinessLogic.addRent(rent1);
+            Rent rent2 = new Rent(user2, BusinessLogic.rentGameCopy(game2, GamePlatform.PC), LocalDate.of(2023, 5, 15));
+            BusinessLogic.addRent(rent2);
+            
+        } catch (DtoException | BusinessException e) {
+            e.printStackTrace();
+        }
+    }
 }
