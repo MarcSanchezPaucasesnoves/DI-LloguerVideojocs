@@ -96,6 +96,7 @@ public class DialogRentRecord extends javax.swing.JDialog {
         jButtonRentCancel = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setTitle("Registrar lloguer");
         setResizable(false);
 
         jPanelRentData.setBorder(javax.swing.BorderFactory.createTitledBorder("Dades del lloguer"));

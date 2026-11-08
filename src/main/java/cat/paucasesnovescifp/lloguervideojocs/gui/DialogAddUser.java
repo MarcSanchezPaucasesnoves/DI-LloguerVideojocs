@@ -64,6 +64,8 @@ public class DialogAddUser extends javax.swing.JDialog {
         validationPanel = new org.netbeans.validation.api.ui.swing.ValidationPanel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setTitle("Crear usuari");
+        setIconImage(new javax.swing.ImageIcon(getClass().getResource("/userIcon.png")).getImage());
         setResizable(false);
         setSize(new java.awt.Dimension(0, 0));
 

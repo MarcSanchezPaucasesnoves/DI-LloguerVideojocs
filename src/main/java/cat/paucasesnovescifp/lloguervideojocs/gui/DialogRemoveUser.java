@@ -49,6 +49,8 @@ public class DialogRemoveUser extends javax.swing.JDialog {
         jLabelUserRegisterDate = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setTitle("Eliminar usuari");
+        setIconImage(new javax.swing.ImageIcon(getClass().getResource("/userIcon.png")).getImage());
         setResizable(false);
 
         jTableReturnRecord.setModel(new javax.swing.table.DefaultTableModel(

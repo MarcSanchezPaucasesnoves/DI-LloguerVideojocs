@@ -41,6 +41,8 @@ public class DialogRemoveGame extends javax.swing.JDialog {
         jLabelGemGenre = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setTitle("Eliminar joc");
+        setIconImage(new javax.swing.ImageIcon(getClass().getResource("/gameControllerIcon.png")).getImage());
         setResizable(false);
 
         jTableReturnRecord.setModel(new javax.swing.table.DefaultTableModel(

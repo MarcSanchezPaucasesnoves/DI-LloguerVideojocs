@@ -45,6 +45,8 @@ public class DialogReturnRecord extends javax.swing.JDialog {
         jLabelRentInitialDate = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setTitle("Tornar lloguer");
+        setIconImage(new javax.swing.ImageIcon(getClass().getResource("/returnIcon.png")).getImage());
         setResizable(false);
 
         jTableReturnRecord.setModel(new javax.swing.table.DefaultTableModel(

@@ -97,6 +97,7 @@ public class MainScreen extends javax.swing.JFrame {
         jMenuItemGameRemove = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("Gestió de Lloguer de Videojocs");
 
         jTableVideogameRental.setAutoCreateRowSorter(true);
         jTableVideogameRental.setModel(new javax.swing.table.DefaultTableModel(

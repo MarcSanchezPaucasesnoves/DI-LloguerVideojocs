@@ -73,6 +73,8 @@ public class DialogAddGame extends javax.swing.JDialog {
         validationPanel = new org.netbeans.validation.api.ui.swing.ValidationPanel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setTitle("Crear joc");
+        setIconImage(new javax.swing.ImageIcon(getClass().getResource("/gameControllerIcon.png")).getImage());
         setResizable(false);
 
         jLabelName.setText("Nom *:");
