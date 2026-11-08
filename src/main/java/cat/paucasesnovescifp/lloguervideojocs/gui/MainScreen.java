@@ -310,7 +310,7 @@ public class MainScreen extends javax.swing.JFrame {
             
             Game game1 = new Game("Ark Survival Evolved", GameGenre.SURVIVAL, 0, 1, 0, 2);
             BusinessLogic.addGame(game1);
-            Game game2 = new Game("Forza Horizon 4", GameGenre.PLATFORMER, 34, 0, 98, 0);
+            Game game2 = new Game("Forza Horizon 4", GameGenre.PLATFORMER, 2, 0, 1, 0);
             BusinessLogic.addGame(game2);
             
             Rent rent1 = new Rent(user1, BusinessLogic.rentGameCopy(game1, GamePlatform.SWITCH2));
