@@ -4,6 +4,15 @@
  */
 package cat.paucasesnovescifp.lloguervideojocs.gui;
 
+import cat.paucasesnovescifp.lloguervideojocs.dto.DtoException;
+import cat.paucasesnovescifp.lloguervideojocs.dto.Rent;
+import cat.paucasesnovescifp.lloguervideojocs.logic.BusinessLogic;
+import cat.paucasesnovescifp.lloguervideojocs.util.GamePlatform;
+import cat.paucasesnovescifp.lloguervideojocs.util.TableUtils;
+import cat.paucasesnovescifp.lloguervideojocs.util.StringFormater;
+import java.util.ArrayList;
+import javax.swing.table.DefaultTableModel;
+
 /**
  *
  * @author marc
@@ -11,6 +20,12 @@ package cat.paucasesnovescifp.lloguervideojocs.gui;
 public class DialogReturnRecord extends javax.swing.JDialog {
     
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(DialogReturnRecord.class.getName());
+    
+    private DefaultTableModel model;
+    
+    private ArrayList<String> currentValueFieldsSelected;
+    
+    private MainScreen mainScreen;
 
     /**
      * Creates new form DialogReturnRecord
@@ -18,6 +33,16 @@ public class DialogReturnRecord extends javax.swing.JDialog {
     public DialogReturnRecord(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
+        mainScreen = (MainScreen) getParent();
+        
+        validateConfirmButton();
+        
+        suscribeRowTableListener();
+        
+        model = (DefaultTableModel) jTableReturnRecord.getModel();
+        
+        TableUtils.setSorterTable(jTableReturnRecord);
+        refreshReturnRecordTable();
     }
 
     /**
@@ -49,6 +74,7 @@ public class DialogReturnRecord extends javax.swing.JDialog {
         setIconImage(new javax.swing.ImageIcon(getClass().getResource("/returnIcon.png")).getImage());
         setResizable(false);
 
+        jTableReturnRecord.setAutoCreateRowSorter(true);
         jTableReturnRecord.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
@@ -58,7 +84,7 @@ public class DialogReturnRecord extends javax.swing.JDialog {
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
+                java.lang.Integer.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
             };
             boolean[] canEdit = new boolean [] {
                 false, false, false, false, false
@@ -72,8 +98,13 @@ public class DialogReturnRecord extends javax.swing.JDialog {
                 return canEdit [columnIndex];
             }
         });
+        jTableReturnRecord.setRowHeight(60);
+        jTableReturnRecord.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
         jTableReturnRecord.getTableHeader().setReorderingAllowed(false);
         jScrollPaneReturnRecord.setViewportView(jTableReturnRecord);
+        if (jTableReturnRecord.getColumnModel().getColumnCount() > 0) {
+            jTableReturnRecord.getColumnModel().getColumn(0).setCellRenderer(new javax.swing.table.DefaultTableCellRenderer() {{ setHorizontalAlignment(javax.swing.SwingConstants.LEFT); }});
+        }
 
         jPanelDetails.setBorder(javax.swing.BorderFactory.createTitledBorder(""));
 
@@ -85,6 +116,7 @@ public class DialogReturnRecord extends javax.swing.JDialog {
 
         jButtonClose.setBackground(java.awt.Color.lightGray);
         jButtonClose.setText("Tancar");
+        jButtonClose.addActionListener(this::jButtonCloseActionPerformed);
 
         jPanelRentDetails.setLayout(new java.awt.GridLayout(4, 2));
 
@@ -160,8 +192,24 @@ public class DialogReturnRecord extends javax.swing.JDialog {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButtonCompleteRentActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonCompleteRentActionPerformed
-        // TODO add your handling code here:
+        int registerNumber = Integer.parseInt(currentValueFieldsSelected.getFirst());
+        Rent rent = BusinessLogic.getRent(registerNumber);
+        
+        try {
+            BusinessLogic.completeRent(rent);
+            BusinessLogic.unRentGameCopy(rent.getGame(), rent.getPlatform());
+            javax.swing.JOptionPane.showMessageDialog(this, "Lloguer completat correctament", "Informació de l'operació", javax.swing.JOptionPane.INFORMATION_MESSAGE);
+            mainScreen.refreshMainScreen();
+            dispose();
+        } catch (DtoException e) {
+
+        }
+        
     }//GEN-LAST:event_jButtonCompleteRentActionPerformed
+
+    private void jButtonCloseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonCloseActionPerformed
+        dispose();
+    }//GEN-LAST:event_jButtonCloseActionPerformed
 
     /**
      * @param args the command line arguments
@@ -184,4 +232,50 @@ public class DialogReturnRecord extends javax.swing.JDialog {
     private javax.swing.JScrollPane jScrollPaneReturnRecord;
     private javax.swing.JTable jTableReturnRecord;
     // End of variables declaration//GEN-END:variables
+
+    private void refreshReturnRecordTable() {
+        model.setRowCount(0);
+        
+        ArrayList<Rent> rentList = BusinessLogic.getRentList();
+        
+        
+        for (Rent rent : rentList) {
+            if (!rent.isEnded()) {
+                model.addRow(
+                    new Object[] {
+                        rent.getRegisterNumber(),
+                        rent.getGameName(),
+                        rent.getUser().getNameFirstSurname(),
+                        rent.getPlatform().toString(),
+                        StringFormater.dateToString(rent.getInitialDate())
+                    }
+                );
+            }        
+        }
+    }
+    
+    private void suscribeRowTableListener() {
+        jTableReturnRecord.getSelectionModel().addListSelectionListener(new javax.swing.event.ListSelectionListener() {
+            @Override
+            public void valueChanged(javax.swing.event.ListSelectionEvent evt) {
+                currentValueFieldsSelected = TableUtils.getFieldsSelected(evt, jTableReturnRecord);
+                refreshRentDetails();
+                validateConfirmButton();
+            }
+        });
+    }
+    
+    
+    private void refreshRentDetails() {
+        jLabelGameName.setText(currentValueFieldsSelected.get(1));
+        jLabelUserName.setText(currentValueFieldsSelected.get(2));
+        jLabelPlatformName.setText(currentValueFieldsSelected.get(3));
+        jLabelRentInitialDate.setText(currentValueFieldsSelected.get(4));
+    }
+    
+    private void validateConfirmButton() {
+        jButtonCompleteRent.setEnabled(
+            jTableReturnRecord.getSelectedRow() != -1
+        );
+    }
 }

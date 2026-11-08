@@ -10,6 +10,7 @@ import cat.paucasesnovescifp.lloguervideojocs.dto.Rent;
 import cat.paucasesnovescifp.lloguervideojocs.dto.User;
 import cat.paucasesnovescifp.lloguervideojocs.logic.BusinessException;
 import cat.paucasesnovescifp.lloguervideojocs.logic.BusinessLogic;
+import cat.paucasesnovescifp.lloguervideojocs.util.TableUtils;
 import cat.paucasesnovescifp.lloguervideojocs.util.GameGenre;
 import cat.paucasesnovescifp.lloguervideojocs.util.GamePlatform;
 import cat.paucasesnovescifp.lloguervideojocs.util.StringFormater;
@@ -37,17 +38,7 @@ public class MainScreen extends javax.swing.JFrame {
         initializeObjects();
         refreshMainScreen();
         
-        
-        javax.swing.table.TableRowSorter<?> sorter = (javax.swing.table.TableRowSorter<?>) jTableVideogameRental.getRowSorter();
-
-        if (sorter != null) {
-            java.util.List<javax.swing.RowSorter.SortKey> sortKeys = new java.util.ArrayList<>();
-    
-            sortKeys.add(new javax.swing.RowSorter.SortKey(0, javax.swing.SortOrder.DESCENDING));
-    
-            sorter.setSortKeys(sortKeys);
-            sorter.sort();
-        }
+        TableUtils.setSorterTable(jTableVideogameRental);
     }
 
     /**

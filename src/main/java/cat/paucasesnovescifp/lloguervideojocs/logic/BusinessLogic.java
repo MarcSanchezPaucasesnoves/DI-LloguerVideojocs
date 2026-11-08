@@ -108,7 +108,15 @@ public class BusinessLogic {
         return gameToReturn;
     }
     
-    public static void unRentGameCopy(GameCopy gameCopy) {
-        gameCopy.changeRentValue();
+    public static void unRentGameCopy(Game game, GamePlatform platform) {
+        List<GameCopy> gameCopyList = game.getPlatformsCopy().get(platform);
+        
+        for (GameCopy gameCopy : gameCopyList) {
+            if (gameCopy.isRent()) {
+                gameCopy.changeRentValue();
+                return;
+            }
+        }
+        
     }
 }
