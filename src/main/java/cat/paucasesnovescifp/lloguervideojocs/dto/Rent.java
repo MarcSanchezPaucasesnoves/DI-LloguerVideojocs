@@ -40,6 +40,12 @@ public class Rent {
         game = gameCopy.getGame();
         ended = false;
     }
+    
+    public Rent(User user, GameCopy gameCopy, LocalDate initialDate) {
+        this(user, gameCopy);
+        this.initialDate = initialDate;
+        this.finalDate = initialDate.plusDays(extraDays);
+    }
 
     public int getRegisterNumber() {
         return registerNumber;
@@ -112,6 +118,10 @@ public class Rent {
     }
     
     
+    
+    public boolean isOutOfDate() {
+        return finalDate.isBefore(LocalDate.now());
+    }
  
     public boolean isEnded() {
         return ended;

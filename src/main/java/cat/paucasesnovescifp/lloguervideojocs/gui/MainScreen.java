@@ -14,6 +14,8 @@ import cat.paucasesnovescifp.lloguervideojocs.util.TableUtils;
 import cat.paucasesnovescifp.lloguervideojocs.util.GameGenre;
 import cat.paucasesnovescifp.lloguervideojocs.util.GamePlatform;
 import cat.paucasesnovescifp.lloguervideojocs.util.StringFormater;
+import java.time.LocalDate;
+import java.time.Month;
 import java.util.ArrayList;
 import java.util.Locale;
 import javax.swing.table.DefaultTableModel;
@@ -59,11 +61,14 @@ public class MainScreen extends javax.swing.JFrame {
                 if (!isRowSelected(row)) {
                     try {
                         int value = Integer.parseInt(getValueAt(row, 0).toString());
+                        Rent rent = BusinessLogic.getRent(value);
 
-                        if (BusinessLogic.getRent(value).isEnded()) {
+                        if (rent.isEnded()) {
                             c.setBackground(new java.awt.Color(200, 255, 200));
-                        } else {
+                        } else if (rent.isOutOfDate()) {
                             c.setBackground(new java.awt.Color(255, 200, 200));
+                        } else {
+                            c.setBackground(java.awt.Color.WHITE);
                         }
 
                     } catch (Exception e) {
@@ -308,7 +313,7 @@ public class MainScreen extends javax.swing.JFrame {
             
             Rent rent1 = new Rent(user1, BusinessLogic.rentGameCopy(game1, GamePlatform.SWITCH2));
             BusinessLogic.addRent(rent1);
-            Rent rent2 = new Rent(user2, BusinessLogic.rentGameCopy(game2, GamePlatform.PC));
+            Rent rent2 = new Rent(user2, BusinessLogic.rentGameCopy(game2, GamePlatform.PC), LocalDate.of(2023, 5, 15));
             BusinessLogic.addRent(rent2);
             
         } catch (DtoException | BusinessException e) {
