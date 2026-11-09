@@ -33,9 +33,9 @@
       <Group type="103" groupAlignment="0" attributes="0">
           <Group type="102" alignment="0" attributes="0">
               <EmptySpace max="32767" attributes="0"/>
-              <Component id="jButtonUserAddConfirm" min="-2" pref="130" max="-2" attributes="0"/>
+              <Component id="jButtonUserAddConfirm" min="-2" pref="140" max="-2" attributes="0"/>
               <EmptySpace type="separate" max="-2" attributes="0"/>
-              <Component id="jButtonUserAddCancel" min="-2" pref="130" max="-2" attributes="0"/>
+              <Component id="jButtonUserAddCancel" min="-2" pref="140" max="-2" attributes="0"/>
               <EmptySpace min="-2" pref="21" max="-2" attributes="0"/>
           </Group>
           <Component id="jPanelUserData" alignment="1" max="32767" attributes="0"/>
